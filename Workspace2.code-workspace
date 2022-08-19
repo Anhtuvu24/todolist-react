@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"path": "..\\.."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"iostream": "cpp",
+			"initializer_list": "cpp",
+			"valarray": "cpp",
+			"xutility": "cpp",
+			"xmemory": "cpp",
+			"utility": "cpp",
+			"random": "cpp",
+			"iomanip": "cpp",
+			"xstring": "cpp",
+			"ostream": "cpp"
+		}
+	}
+}
