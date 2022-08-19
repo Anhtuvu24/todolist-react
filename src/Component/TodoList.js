@@ -76,6 +76,16 @@ class TodoList extends React.Component {
     displayList = (status) => {
         this.setState({statusList: status});
     };
+
+    setUpdate = (updateName, id) => {
+        const {list} = this.state;
+        list.map((todo, index) => {
+            if(todo.id === id) {
+                todo.name = updateName;
+            }
+        }) 
+        this.setState({list: list});
+    };
   
     render() {
     const { list } = this.state;
@@ -93,6 +103,7 @@ class TodoList extends React.Component {
                                 removeTodo={this.removeTodo} 
                                 handleCheckBox={this.handleCheckBox}
                                 id={todo.id}
+                                setUpdate = {this.setUpdate}
                                 />
                             )}
                         </div>
