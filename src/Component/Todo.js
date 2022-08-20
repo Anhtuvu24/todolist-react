@@ -1,4 +1,6 @@
 import React from 'react';
+import './index.css';
+
 //import ReactDOM from 'react-dom';
 
 class Todo extends React.Component {
@@ -15,7 +17,6 @@ class Todo extends React.Component {
     };
 
     handleEditing = () => {
-        console.log("Check");
         this.setState({editing: true})
     };
 
