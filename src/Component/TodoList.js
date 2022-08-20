@@ -4,31 +4,33 @@ import Todo from './Todo';
 import Header from './Header';
 import { nanoid } from 'nanoid';
 import Footer from './Footer';
+import './index.css';
 
 class TodoList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             list: [
-                // {
-                //     name: 'todo1',
-                //     id: 0,
-                //     isCompleted: false,
-                // },
+                {
+                    name: 'todo1',
+                    id: 0,
+                    isCompleted: false,
+                },
 
-                // {
-                //     name: 'todo2',
-                //     id: 1,
-                //     isCompleted: false,
-                // },
+                {
+                    name: 'todo2',
+                    id: 1,
+                    isCompleted: false,
+                },
 
-                // {
-                //     name: 'todo3',
-                //     id: 2,
-                //     isCompleted: false,
-                // }
+                {
+                    name: 'todo3',
+                    id: 2,
+                    isCompleted: false,
+                }
             ],
             statusList: "All",
+            keySearch: '',
         };
     }
 
@@ -82,17 +84,22 @@ class TodoList extends React.Component {
         list.map((todo, index) => {
             if(todo.id === id) {
                 todo.name = updateName;
+                
             }
         }) 
         this.setState({list: list});
     };
-  
+
+    setKeySearch = (keySearch) => {
+        this.setState({keySearch: keySearch});
+    };
+
     render() {
     const { list } = this.state;
         if(this.state.statusList === "All") {
             return(
                 <div className = "list-container">
-                    <Header addTodo={this.addTodo}/>
+                    <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
                     <ul>
                         <div>
                             {list.map((todo, index) =>
@@ -104,6 +111,7 @@ class TodoList extends React.Component {
                                 handleCheckBox={this.handleCheckBox}
                                 id={todo.id}
                                 setUpdate = {this.setUpdate}
+                                key={todo.id}
                                 />
                             )}
                         </div>
@@ -119,7 +127,7 @@ class TodoList extends React.Component {
         else if(this.state.statusList === "Active") {
             return(
                 <div className = "list-container">
-                    <Header addTodo={this.addTodo}/>
+                    <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
                     <ul>
                         <div>
                             {list.map((todo, index) => {
@@ -132,6 +140,7 @@ class TodoList extends React.Component {
                                         removeTodo={this.removeTodo} 
                                         handleCheckBox={this.handleCheckBox}
                                         id={todo.id}
+                                        key={todo.id}
                                     />)
                                 }}    
                                 
@@ -148,7 +157,7 @@ class TodoList extends React.Component {
         else if (this.state.statusList === "Complete") {
             return(
                 <div className = "list-container">
-                    <Header addTodo={this.addTodo}/>
+                    <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
                     <ul>
                         <div>
                             {list.map((todo, index) => {
@@ -161,6 +170,37 @@ class TodoList extends React.Component {
                                         removeTodo={this.removeTodo} 
                                         handleCheckBox={this.handleCheckBox}
                                         id={todo.id}
+                                        key={todo.id}
+                                    />)
+                                }}    
+                                
+                            )}
+                        </div>
+                    </ul>
+    
+                    <b><i>{this.state.list.length}</i> items</b>
+                    
+                    <Footer displayList={this.displayList}/>
+                </div>
+            );
+        }
+        else if(this.state.statusList === 'searchList') {
+            return(
+                <div className = "list-container">
+                    <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
+                    <ul>
+                        <div>
+                            {list.map((todo, index) => {
+                                if(todo.name.search(this.state.keySearch) >= 0) {
+                                    return(
+                                    <Todo 
+                                        name={todo.name} 
+                                        isCompleted={todo.isCompleted}
+                                        index={index}
+                                        removeTodo={this.removeTodo} 
+                                        handleCheckBox={this.handleCheckBox}
+                                        id={todo.id}
+                                        key={todo.id}
                                     />)
                                 }}    
                                 

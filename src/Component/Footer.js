@@ -1,4 +1,6 @@
 import React from 'react';
+import './index.css';
+
 
 class Footer extends React.Component {
 
@@ -17,9 +19,12 @@ class Footer extends React.Component {
     render() {
         return(
             <div>
-                <button onClick = {this.displayAll}>All</button>
-                <button onClick = {this.displayComplete}>complete</button>
-                <button onClick = {this.displayActive}>Active</button>
+                <div className='filterList'>
+                    <button onClick = {this.displayAll}>All</button>
+                    <button onClick = {this.displayComplete}>complete</button>
+                    <button onClick = {this.displayActive}>Active</button>
+                </div>
+                
             </div>
         )
     }
