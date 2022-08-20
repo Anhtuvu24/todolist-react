@@ -4,30 +4,31 @@ import Todo from './Todo';
 import Header from './Header';
 import { nanoid } from 'nanoid';
 import Footer from './Footer';
-import './index.css';
+import '../CSS/TodoList.css'
+
 
 class TodoList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             list: [
-                {
-                    name: 'todo1',
-                    id: 0,
-                    isCompleted: false,
-                },
+                // {
+                //     name: 'todo1',
+                //     id: 0,
+                //     isCompleted: false,
+                // },
 
-                {
-                    name: 'todo2',
-                    id: 1,
-                    isCompleted: false,
-                },
+                // {
+                //     name: 'todo2',
+                //     id: 1,
+                //     isCompleted: false,
+                // },
 
-                {
-                    name: 'todo3',
-                    id: 2,
-                    isCompleted: false,
-                }
+                // {
+                //     name: 'todo3',
+                //     id: 2,
+                //     isCompleted: false,
+                // }
             ],
             statusList: "All",
             keySearch: '',
@@ -117,10 +118,12 @@ class TodoList extends React.Component {
                         </div>
                     </ul>
     
-                    <b><i>{this.state.list.length}</i> items</b>
-                    <button onClick={this.checkedALL}>{this.isCheckAll() ? 'unCompleteALL' :  'completedAll'}</button>
-                    
-                    <Footer displayList={this.displayList}/>
+                    <div className='Container-footer'>
+                        <b><i>{this.state.list.length}</i> items</b>
+                        <button onClick={this.checkedALL}>{this.isCheckAll() ? 'unCompleteALL' :  'completedAll'}</button>
+                                
+                        <Footer displayList={this.displayList}/>
+                    </div>
                 </div>
             );
         }
@@ -148,9 +151,10 @@ class TodoList extends React.Component {
                         </div>
                     </ul>
     
-                    <b><i>{this.state.list.length}</i> items</b>
-                    
-                    <Footer displayList={this.displayList}/>
+                    <div className='Container-footer'>
+                        <b><i>{this.state.list.length}</i> items</b>                                
+                        <Footer displayList={this.displayList}/>
+                    </div>
                 </div>
             );
         }
@@ -178,9 +182,10 @@ class TodoList extends React.Component {
                         </div>
                     </ul>
     
-                    <b><i>{this.state.list.length}</i> items</b>
-                    
-                    <Footer displayList={this.displayList}/>
+                    <div className='Container-footer'>
+                        <b><i>{this.state.list.length}</i> items</b>                                
+                        <Footer displayList={this.displayList}/>
+                    </div>
                 </div>
             );
         }
@@ -208,9 +213,10 @@ class TodoList extends React.Component {
                         </div>
                     </ul>
     
-                    <b><i>{this.state.list.length}</i> items</b>
-                    
-                    <Footer displayList={this.displayList}/>
+                    <div className='Container-footer'>
+                        <b><i>{this.state.list.length}</i> items</b>                                
+                        <Footer displayList={this.displayList}/>
+                    </div>
                 </div>
             );
         }
