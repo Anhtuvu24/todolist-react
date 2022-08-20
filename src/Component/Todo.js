@@ -1,5 +1,5 @@
 import React from 'react';
-import './index.css';
+import '../CSS/Todo.css';
 
 //import ReactDOM from 'react-dom';
 

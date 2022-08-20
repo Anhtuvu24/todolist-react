@@ -1,12 +1,13 @@
 import React from 'react';
 //import ReactDOM from 'react-dom';
-import './index.css';
+import '../CSS/Header.css'
 
 class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             todo: '',
+            keyWord: '',
         }
     };
 
@@ -29,30 +30,30 @@ class Header extends React.Component {
     };
 //------------------------------Search------------------------------
     handleSearchKeyPress = (e) => {
-        if(this.state.todo !== '' && e.key === 'Enter') {
-            this.props.setKeySearch(this.state.todo);
+        if(this.state.keyWord !== '' && e.key === 'Enter') {
+            this.props.setKeySearch(this.state.keyWord);
             this.props.displayList('searchList');
-            this.setState({todo: ''})
+            this.setState({keyWord: ''})
         }
     };
 
     handleSearch = () => {
-        if(this.state.todo !== '') {
-            this.props.setKeySearch(this.state.todo);
+        if(this.state.keyWord !== '') {
+            this.props.setKeySearch(this.state.keyWord);
             this.props.displayList('searchList');
-            this.setState({todo: ''})
+            this.setState({keyWord: ''})
         }
     }
 
     handleChangeSearch = (e) => {
-        this.setState({todo: e.target.value});
+        this.setState({keyWord: e.target.value});
     };
 
     render() {
         return(
             <div>
                 <div className='searchKeyWord'>
-                    <input type = 'text' placeholder='Key word' value = {this.state.todo} onChange = {this.handleChangeSearch} onKeyDown = {this.handleSearchKeyPress} />    
+                    <input type = 'text' placeholder='Key word' value = {this.state.keyWord} onChange = {this.handleChangeSearch} onKeyDown = {this.handleSearchKeyPress} />    
                     <button type = "submit" onClick={this.handleSearch}>Search</button>
                 </div>
                 <div className='Container-header'>
