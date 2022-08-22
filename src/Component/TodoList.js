@@ -143,6 +143,7 @@ class TodoList extends React.Component {
                                         removeTodo={this.removeTodo} 
                                         handleCheckBox={this.handleCheckBox}
                                         id={todo.id}
+                                        setUpdate = {this.setUpdate}
                                         key={todo.id}
                                     />)
                                 }}    
@@ -174,6 +175,7 @@ class TodoList extends React.Component {
                                         removeTodo={this.removeTodo} 
                                         handleCheckBox={this.handleCheckBox}
                                         id={todo.id}
+                                        setUpdate = {this.setUpdate}
                                         key={todo.id}
                                     />)
                                 }}    
@@ -205,6 +207,7 @@ class TodoList extends React.Component {
                                         removeTodo={this.removeTodo} 
                                         handleCheckBox={this.handleCheckBox}
                                         id={todo.id}
+                                        setUpdate = {this.setUpdate}
                                         key={todo.id}
                                     />)
                                 }}    
