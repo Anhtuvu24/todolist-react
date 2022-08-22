@@ -42,7 +42,7 @@ class TodoList extends React.Component {
     removeTodo = (index) => {
         const { list }=this.state;
         list.splice(index, 1);
-        this.setState({list: list});
+        this.setState({list});
     };
 
 
@@ -53,7 +53,7 @@ class TodoList extends React.Component {
                 todo.isCompleted = !todo.isCompleted;
             }
         })
-        this.setState({list: list});
+        this.setState({list});
     };
 
     isCheckAll = () => {
@@ -73,7 +73,7 @@ class TodoList extends React.Component {
                 todo.isCompleted = true;
             })
         }
-        this.setState({list: list});    
+        this.setState({list});    
     };
 
     displayList = (status) => {
@@ -88,11 +88,11 @@ class TodoList extends React.Component {
                 
             }
         }) 
-        this.setState({list: list});
+        this.setState({list});
     };
 
     setKeySearch = (keySearch) => {
-        this.setState({keySearch: keySearch});
+        this.setState({keySearch});
     };
 
     render() {
