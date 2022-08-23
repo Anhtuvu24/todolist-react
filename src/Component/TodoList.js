@@ -12,23 +12,7 @@ class TodoList extends React.Component {
         super(props);
         this.state = {
             list: [
-                {
-                    name: 'todo1',
-                    id: 0,
-                    isCompleted: false,
-                },
-
-                {
-                    name: 'todo2',
-                    id: 1,
-                    isCompleted: false,
-                },
-
-                {
-                    name: 'todo3',
-                    id: 2,
-                    isCompleted: false,
-                }
+               
             ],
             statusList: "All",
             keySearch: '',
@@ -46,10 +30,10 @@ class TodoList extends React.Component {
     };
 
 
-    handleCheckBox = (check) => {
+    handleCheckBox = (id) => {
         const { list } = this.state;
-        list.map((todo, index) => {
-            if(todo.id === check) {
+        list.map((todo) => {
+            if(todo.id === id) {
                 todo.isCompleted = !todo.isCompleted;
             }
         })
@@ -80,14 +64,15 @@ class TodoList extends React.Component {
         this.setState({statusList: status});
     };
 
-    setUpdate = (updateName, id) => {
+    setUpdate = (e, updateName, id) => {
         const {list} = this.state;
-        list.map((todo, index) => {
+        list.map((todo) => {
             if(todo.id === id) {
                 todo.name = updateName;
                 
             }
         }) 
+        console.log(e);
         this.setState({list});
     };
 
@@ -96,136 +81,176 @@ class TodoList extends React.Component {
     };
 
     render() {
-    const { list, statusList, keySearch } = this.state;
-        if(statusList === "All") {
-            return(
-                <div className = "list-container">
-                    <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
-                    <ul>
-                        <div>
-                            {list.map((todo, index) =>
-                                <Todo 
-                                name={todo.name} 
-                                isCompleted={todo.isCompleted}
-                                index={index}
-                                removeTodo={this.removeTodo} 
-                                handleCheckBox={this.handleCheckBox}
-                                id={todo.id}
-                                setUpdate = {this.setUpdate}
-                                key={todo.id}
-                                />
-                            )}
-                        </div>
-                    </ul>
-    
-                    <div className='Container-footer'>
-                        <b><i>{list.length}</i> items</b>
-                        <button onClick={this.checkedALL}>{this.isCheckAll() ? 'unCompleteALL' :  'completedAll'}</button>
-                                
-                        <Footer displayList={this.displayList}/>
-                    </div>
-                </div>
-            );
+        const { list, statusList, keySearch } = this.state;
+        let _list;
+        _list = keySearch ? list.filter(item => item.name.includes(keySearch)) : list;
+        switch(statusList) {
+            case "Complete":
+                _list = _list.filter(item => item.isCompleted);
+                break;
+            case "Active":
+                _list = _list.filter(item => !item.isCompleted);
+                break;
+            default: 
+                break;
         }
-        else if(statusList === "Active") {
-            return(
-                <div className = "list-container">
-                    <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
-                    <ul>
-                        <div>
-                            {list.map((todo, index) => {
-                                if(todo.isCompleted === false) {
-                                    return(
-                                    <Todo 
-                                        name={todo.name} 
-                                        isCompleted={todo.isCompleted}
-                                        index={index}
-                                        removeTodo={this.removeTodo} 
-                                        handleCheckBox={this.handleCheckBox}
-                                        id={todo.id}
-                                        setUpdate = {this.setUpdate}
-                                        key={todo.id}
-                                    />)
-                                }}    
-                                
-                            )}
-                        </div>
-                    </ul>
+        // if(statusList === "All") {
+        //     return(//
+        //         <div className = "list-container">
+        //             <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
+        //             <ul>
+        //                 <div>
+        //                     {list.map((todo, index) =>
+        //                         <Todo 
+        //                         name={todo.name} 
+        //                         isCompleted={todo.isCompleted}
+        //                         index={index}
+        //                         removeTodo={this.removeTodo} 
+        //                         handleCheckBox={this.handleCheckBox}
+        //                         id={todo.id}
+        //                         setUpdate = {this.setUpdate}
+        //                         key={todo.id}
+        //                         />
+        //                     )}
+        //                 </div>
+        //             </ul>
     
-                    <div className='Container-footer'>
-                        <b><i>{list.length}</i> items</b>                                
-                        <Footer displayList={this.displayList}/>
-                    </div>
-                </div>
-            );
-        }
-        else if (statusList === "Complete") {
-            return(
-                <div className = "list-container">
-                    <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
-                    <ul>
-                        <div>
-                            {list.map((todo, index) => {
-                                if(todo.isCompleted === true) {
-                                    return(
-                                    <Todo 
-                                        name={todo.name} 
-                                        isCompleted={todo.isCompleted}
-                                        index={index}
-                                        removeTodo={this.removeTodo} 
-                                        handleCheckBox={this.handleCheckBox}
-                                        id={todo.id}
-                                        setUpdate = {this.setUpdate}
-                                        key={todo.id}
-                                    />)
-                                }}    
+        //             <div className='Container-footer'>
+        //                 <b><i>{list.length}</i> items</b>
+        //                 <button onClick={this.checkedALL}>{this.isCheckAll() ? 'unCompleteALL' :  'completedAll'}</button>
                                 
-                            )}
-                        </div>
-                    </ul>
-    
-                    <div className='Container-footer'>
-                        <b><i>{list.length}</i> items</b>                                
-                        <Footer displayList={this.displayList}/>
-                    </div>
-                </div>
-            );
-        }
-        else if(statusList === 'searchList') {
-            return(
-                <div className = "list-container">
-                    <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
-                    <ul>
-                        <div>
-                            {list.map((todo, index) => {
-                                if(todo.name.search(keySearch) >= 0) {
-                                    return(
-                                    <Todo 
-                                        name={todo.name} 
-                                        isCompleted={todo.isCompleted}
-                                        index={index}
-                                        removeTodo={this.removeTodo} 
-                                        handleCheckBox={this.handleCheckBox}
-                                        id={todo.id}
-                                        setUpdate = {this.setUpdate}
-                                        key={todo.id}
-                                    />)
-                                }}    
+        //                 <Footer displayList={this.displayList}/>
+        //             </div>
+        //         </div>
+        //     );
+        // }
+        // else if(statusList === "Active") {
+        //     return(
+        //         <div className = "list-container">
+        //             <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
+        //             <ul>
+        //                 <div>
+        //                     {list.map((todo, index) => {
+        //                         if(todo.isCompleted === false) {
+        //                             return(
+        //                             <Todo 
+        //                                 name={todo.name} 
+        //                                 isCompleted={todo.isCompleted}
+        //                                 index={index}
+        //                                 removeTodo={this.removeTodo} 
+        //                                 handleCheckBox={this.handleCheckBox}
+        //                                 id={todo.id}
+        //                                 setUpdate = {this.setUpdate}
+        //                                 key={todo.id}
+        //                             />)
+        //                         }}    
                                 
-                            )}
-                        </div>
-                    </ul>
+        //                     )}
+        //                 </div>
+        //             </ul>
     
-                    <div className='Container-footer'>
-                        <b><i>{list.length}</i> items</b>                                
-                        <Footer displayList={this.displayList}/>
+        //             <div className='Container-footer'>
+        //                 <b><i>{list.length}</i> items</b>                                
+        //                 <Footer displayList={this.displayList}/>
+        //             </div>
+        //         </div>
+        //     );
+        // }
+        // else if (statusList === "Complete") {
+        //     return(
+        //         <div className = "list-container">
+        //             <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
+        //             <ul>
+        //                 <div>
+        //                     {list.map((todo, index) => {
+        //                         if(todo.isCompleted === true) {
+        //                             return(
+        //                             <Todo 
+        //                                 name={todo.name} 
+        //                                 isCompleted={todo.isCompleted}
+        //                                 index={index}
+        //                                 removeTodo={this.removeTodo} 
+        //                                 handleCheckBox={this.handleCheckBox}
+        //                                 id={todo.id}
+        //                                 setUpdate = {this.setUpdate}
+        //                                 key={todo.id}
+        //                             />)
+        //                         }}    
+                                
+        //                     )}
+        //                 </div>
+        //             </ul>
+    
+        //             <div className='Container-footer'>
+        //                 <b><i>{list.length}</i> items</b>                                
+        //                 <Footer displayList={this.displayList}/>
+        //             </div>
+        //         </div>
+        //     );
+        // }
+        // else if(statusList === 'searchList') {
+        //     return(
+        //         <div className = "list-container">
+        //             <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
+        //             <ul>
+        //                 <div>
+        //                     {list.map((todo, index) => {
+        //                         if(todo.name.search(keySearch) >= 0) {
+        //                             return(
+        //                             <Todo 
+        //                                 name={todo.name} 
+        //                                 isCompleted={todo.isCompleted}
+        //                                 index={index}
+        //                                 removeTodo={this.removeTodo} 
+        //                                 handleCheckBox={this.handleCheckBox}
+        //                                 id={todo.id}
+        //                                 setUpdate = {this.setUpdate}
+        //                                 key={todo.id}
+        //                             />)
+        //                         }}    
+                                
+        //                     )}
+        //                 </div>
+        //             </ul>
+    
+        //             <div className='Container-footer'>
+        //                 <b><i>{list.length}</i> items</b>                                
+        //                 <Footer displayList={this.displayList}/>
+        //             </div>
+        //         </div>
+        //     );
+        // }
+        
+        return(
+            <div className = "list-container">
+                <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
+                <ul>
+                    <div>
+                        {_list.map((todo, index) =>
+                            <Todo 
+                            name={todo.name} 
+                            isCompleted={todo.isCompleted}
+                            index={index}
+                            removeTodo={this.removeTodo} 
+                            handleCheckBox={this.handleCheckBox}
+                            id={todo.id}
+                            setUpdate = {this.setUpdate}
+                            key={todo.id}
+                            />
+                        )}
                     </div>
+                </ul>
+
+                <div className='Container-footer'>
+                    <b><i>{list.length}</i> items</b>
+                    <button onClick={this.checkedALL}>{this.isCheckAll() ? 'unCompleteALL' :  'completedAll'}</button>
+                            
+                    <Footer displayList={this.displayList}/>
                 </div>
-            );
-        }
+            </div>
+        ); 
     }
 }
 
 export default TodoList
-
 

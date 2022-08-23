@@ -23,6 +23,7 @@ class Todo extends React.Component {
     handleUpdate = e => {
         if(e.key === "Enter") {
             this.setState({editing: false});
+            
         }
     };
 
@@ -43,7 +44,7 @@ class Todo extends React.Component {
                     <div className='todoDisplay' style = {viewMode} onDoubleClick={this.handleEditing}>
                         {this.props.index}. {this.props.name}
                     </div>
-                    <input onChange={e => {this.props.setUpdate(e.target.value, this.props.id)}} onKeyDown = {this.handleUpdate} style={editMode} type = "text"/>
+                    <input onChange={e => {this.props.setUpdate(e, e.target.value, this.props.id)}} onKeyDown = {this.handleUpdate} style={editMode} type = "text"/>
                 </li>
                 <button onClick={this.handleRemoveTodo}>delelte</button>
             </div>
