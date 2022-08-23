@@ -12,15 +12,17 @@ class Header extends React.Component {
     };
 
     handleAddTodo = () => {
-        if(this.state.todo !== '') {
-        this.props.addTodo(this.state.todo);
+        const {todo} = this.state;
+        if(todo !== '') {
+        this.props.addTodo(todo);
         this.setState({todo: ''})
         }
     };
 
     handleKeyPress = (e) => {
-        if(this.state.todo !== '' && e.key === 'Enter') {
-            this.props.addTodo(this.state.todo);
+        const {todo} = this.state;
+        if(todo !== '' && e.key === 'Enter') {
+            this.props.addTodo(todo);
             this.setState({todo: ''})
         }
     };
@@ -30,16 +32,18 @@ class Header extends React.Component {
     };
 //------------------------------Search------------------------------
     handleSearchKeyPress = (e) => {
-        if(this.state.keyWord !== '' && e.key === 'Enter') {
-            this.props.setKeySearch(this.state.keyWord);
+        const {keyWord} = this.state;
+        if(keyWord !== '' && e.key === 'Enter') {
+            this.props.setKeySearch(keyWord);
             this.props.displayList('searchList');
             this.setState({keyWord: ''})
         }
     };
 
     handleSearch = () => {
-        if(this.state.keyWord !== '') {
-            this.props.setKeySearch(this.state.keyWord);
+        const {keyWord} = this.state;
+        if(keyWord !== '') {
+            this.props.setKeySearch(keyWord);
             this.props.displayList('searchList');
             this.setState({keyWord: ''})
         }
@@ -50,15 +54,16 @@ class Header extends React.Component {
     };
 
     render() {
+        const {todo, keyWord} = this.state;
         return(
             <div>
                 <div className='searchKeyWord'>
-                    <input type = 'text' placeholder='Key word' value = {this.state.keyWord} onChange = {this.handleChangeSearch} onKeyDown = {this.handleSearchKeyPress} />    
+                    <input type = 'text' placeholder='Key word' value = {keyWord} onChange = {this.handleChangeSearch} onKeyDown = {this.handleSearchKeyPress} />    
                     <button type = "submit" onClick={this.handleSearch}>Search</button>
                 </div>
                 <div className='Container-header'>
                     <h1>TODO LIST</h1>
-                    <input type = "text" placeholder = "What do you want to do?" value = {this.state.todo} onKeyDown = {this.handleKeyPress}  onChange={this.handleChange}/>
+                    <input type = "text" placeholder = "What do you want to do?" value = {todo} onKeyDown = {this.handleKeyPress}  onChange={this.handleChange}/>
                     <button type = "submit" onClick={this.handleAddTodo}>Add</button>
                 </div>
             </div>
