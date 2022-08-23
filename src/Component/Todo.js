@@ -29,6 +29,7 @@ class Todo extends React.Component {
     render() {
         let viewMode = {};
         let editMode = {};
+        const {isCompleted} = this.props;
         if(this.state.editing) {
             viewMode.display = "none";
         }
@@ -37,8 +38,8 @@ class Todo extends React.Component {
         }
         return(
             <div className='todo-container'>
-                <input type = "checkbox" onChange={() => this.props.handleCheckBox(this.props.id)} checked = {this.props.isCompleted}/>
-                <li className = {this.props.isCompleted? "completed" : ''}>
+                <input type = "checkbox" onChange={() => this.props.handleCheckBox(this.props.id)} checked = {isCompleted}/>
+                <li className = {isCompleted ? "completed" : ''}>
                     <div className='todoDisplay' style = {viewMode} onDoubleClick={this.handleEditing}>
                         {this.props.index}. {this.props.name}
                     </div>

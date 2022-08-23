@@ -12,23 +12,23 @@ class TodoList extends React.Component {
         super(props);
         this.state = {
             list: [
-                // {
-                //     name: 'todo1',
-                //     id: 0,
-                //     isCompleted: false,
-                // },
+                {
+                    name: 'todo1',
+                    id: 0,
+                    isCompleted: false,
+                },
 
-                // {
-                //     name: 'todo2',
-                //     id: 1,
-                //     isCompleted: false,
-                // },
+                {
+                    name: 'todo2',
+                    id: 1,
+                    isCompleted: false,
+                },
 
-                // {
-                //     name: 'todo3',
-                //     id: 2,
-                //     isCompleted: false,
-                // }
+                {
+                    name: 'todo3',
+                    id: 2,
+                    isCompleted: false,
+                }
             ],
             statusList: "All",
             keySearch: '',
@@ -42,7 +42,7 @@ class TodoList extends React.Component {
     removeTodo = (index) => {
         const { list }=this.state;
         list.splice(index, 1);
-        this.setState({list: list});
+        this.setState({list});
     };
 
 
@@ -53,7 +53,7 @@ class TodoList extends React.Component {
                 todo.isCompleted = !todo.isCompleted;
             }
         })
-        this.setState({list: list});
+        this.setState({list});
     };
 
     isCheckAll = () => {
@@ -73,7 +73,7 @@ class TodoList extends React.Component {
                 todo.isCompleted = true;
             })
         }
-        this.setState({list: list});    
+        this.setState({list});    
     };
 
     displayList = (status) => {
@@ -88,16 +88,16 @@ class TodoList extends React.Component {
                 
             }
         }) 
-        this.setState({list: list});
+        this.setState({list});
     };
 
     setKeySearch = (keySearch) => {
-        this.setState({keySearch: keySearch});
+        this.setState({keySearch});
     };
 
     render() {
-    const { list } = this.state;
-        if(this.state.statusList === "All") {
+    const { list, statusList, keySearch } = this.state;
+        if(statusList === "All") {
             return(
                 <div className = "list-container">
                     <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
@@ -119,7 +119,7 @@ class TodoList extends React.Component {
                     </ul>
     
                     <div className='Container-footer'>
-                        <b><i>{this.state.list.length}</i> items</b>
+                        <b><i>{list.length}</i> items</b>
                         <button onClick={this.checkedALL}>{this.isCheckAll() ? 'unCompleteALL' :  'completedAll'}</button>
                                 
                         <Footer displayList={this.displayList}/>
@@ -127,7 +127,7 @@ class TodoList extends React.Component {
                 </div>
             );
         }
-        else if(this.state.statusList === "Active") {
+        else if(statusList === "Active") {
             return(
                 <div className = "list-container">
                     <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
@@ -153,13 +153,13 @@ class TodoList extends React.Component {
                     </ul>
     
                     <div className='Container-footer'>
-                        <b><i>{this.state.list.length}</i> items</b>                                
+                        <b><i>{list.length}</i> items</b>                                
                         <Footer displayList={this.displayList}/>
                     </div>
                 </div>
             );
         }
-        else if (this.state.statusList === "Complete") {
+        else if (statusList === "Complete") {
             return(
                 <div className = "list-container">
                     <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
@@ -185,20 +185,20 @@ class TodoList extends React.Component {
                     </ul>
     
                     <div className='Container-footer'>
-                        <b><i>{this.state.list.length}</i> items</b>                                
+                        <b><i>{list.length}</i> items</b>                                
                         <Footer displayList={this.displayList}/>
                     </div>
                 </div>
             );
         }
-        else if(this.state.statusList === 'searchList') {
+        else if(statusList === 'searchList') {
             return(
                 <div className = "list-container">
                     <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
                     <ul>
                         <div>
                             {list.map((todo, index) => {
-                                if(todo.name.search(this.state.keySearch) >= 0) {
+                                if(todo.name.search(keySearch) >= 0) {
                                     return(
                                     <Todo 
                                         name={todo.name} 
@@ -217,7 +217,7 @@ class TodoList extends React.Component {
                     </ul>
     
                     <div className='Container-footer'>
-                        <b><i>{this.state.list.length}</i> items</b>                                
+                        <b><i>{list.length}</i> items</b>                                
                         <Footer displayList={this.displayList}/>
                     </div>
                 </div>
