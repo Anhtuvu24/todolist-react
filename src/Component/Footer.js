@@ -22,9 +22,9 @@ class Footer extends React.Component {
         return(
             <div>
                 <div className='filterList'>
-                    <button onClick = {displayList("All")}>All</button>
-                    <button onClick = {this.displayComplete}>complete</button>
-                    <button onClick = {this.displayActive}>Active</button>
+                    <button onClick = {() => displayList("All")}>All</button>
+                    <button onClick = {() => displayList("Complete")}>complete</button>
+                    <button onClick = {() => displayList("Active")}>Active</button>
                 </div>
                 
             </div>
