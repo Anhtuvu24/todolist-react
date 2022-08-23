@@ -31,23 +31,16 @@ class Header extends React.Component {
         this.setState({todo: e.target.value});
     };
 //------------------------------Search------------------------------
-    handleSearchKeyPress = (e) => {
-        const {keyWord} = this.state;
-        if(keyWord !== '' && e.key === 'Enter') {
-            this.props.setKeySearch(keyWord);
-            this.props.displayList('searchList');
-            this.setState({keyWord: ''})
+    handleSearchKeyPress = (e) => { //
+        if(e.key === 'Enter') {
+            this.handleSearch();
         }
     };
 
     handleSearch = () => {
         const {keyWord} = this.state;
-        if(keyWord !== '') {
-            this.props.setKeySearch(keyWord);
-            this.props.displayList('searchList');
-            this.setState({keyWord: ''})
-        }
-    }
+        this.props.setKeySearch(keyWord);
+    } 
 
     handleChangeSearch = (e) => {
         this.setState({keyWord: e.target.value});

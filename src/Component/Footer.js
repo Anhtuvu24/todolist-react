@@ -18,10 +18,11 @@ class Footer extends React.Component {
     };
 
     render() {
+        const { displayList } = this.props;
         return(
             <div>
                 <div className='filterList'>
-                    <button onClick = {this.displayAll}>All</button>
+                    <button onClick = {displayList("All")}>All</button>
                     <button onClick = {this.displayComplete}>complete</button>
                     <button onClick = {this.displayActive}>Active</button>
                 </div>
