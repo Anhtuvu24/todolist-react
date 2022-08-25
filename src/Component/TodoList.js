@@ -36,7 +36,7 @@ class TodoList extends React.Component {
     handleCheckBox = (id) => {
         const { list } = this.state;
         list.map((todo, index) => {
-            if(todo.id === check) {
+            if(todo.id === id) {
                 todo.isCompleted = !todo.isCompleted;
             }
         })
