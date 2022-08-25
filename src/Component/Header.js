@@ -46,17 +46,24 @@ class Header extends React.Component {
         this.setState({keyWord: e.target.value});
     };
 
+    x = (e) => {
+        const { name, value } = e.target;
+        this.setState({
+            [name]: value,
+        })
+    }
+
     render() {
         const {todo, keyWord} = this.state;
         return(
             <div>
                 <div className='searchKeyWord'>
-                    <input type = 'text' placeholder='Key word' value = {keyWord} onChange = {this.handleChangeSearch} onKeyDown = {this.handleSearchKeyPress} />    
+                    <input name="keyWord" type = 'text' placeholder='Key word' value = {keyWord} onChange = {this.handleChangeSearch} onKeyDown = {this.handleSearchKeyPress} />    
                     <button type = "submit" onClick={this.handleSearch}>Search</button>
                 </div>
                 <div className='Container-header'>
                     <h1>TODO LIST</h1>
-                    <input type = "text" placeholder = "What do you want to do?" value = {todo} onKeyDown = {this.handleKeyPress}  onChange={this.handleChange}/>
+                    <input name="todo" type = "text" placeholder = "What do you want to do?" value = {todo} onKeyDown = {this.handleKeyPress}  onChange={this.handleChange}/>
                     <button type = "submit" onClick={this.handleAddTodo}>Add</button>
                 </div>
             </div>

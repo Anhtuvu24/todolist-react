@@ -40,9 +40,15 @@ class TodoList extends React.Component {
     };
 
     removeTodo = (index) => {
-        const { list }=this.state;
-        list.splice(index, 1);
-        this.setState({list});
+        // const { list }=this.state;
+        // list.splice(index, 1);
+        // this.setState({list});
+        this.setState((state) => {
+            state.list.splice(index, 1);
+            return {
+                list: state.list
+            }
+        });
     };
 
 
