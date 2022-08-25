@@ -6,6 +6,7 @@ class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            
             todo: '',
             keyWord: '',
         }
@@ -13,6 +14,7 @@ class Header extends React.Component {
 
     handleAddTodo = () => {
         const {todo} = this.state;
+        // TODO HungHVd:
         if(todo !== '') {
         this.props.addTodo(todo);
         this.setState({todo: ''})
@@ -21,6 +23,7 @@ class Header extends React.Component {
 
     handleKeyPress = (e) => {
         const {todo} = this.state;
+        // TODO HungHVd:
         if(todo !== '' && e.key === 'Enter') {
             this.props.addTodo(todo);
             this.setState({todo: ''})
@@ -42,6 +45,7 @@ class Header extends React.Component {
         this.props.setKeySearch(keyWord);
     } 
 
+    // TODO HungHVd:
     handleChangeSearch = (e) => {
         this.setState({keyWord: e.target.value});
     };

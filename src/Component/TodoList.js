@@ -20,18 +20,22 @@ class TodoList extends React.Component {
     }
 
     addTodo = (name) => {
+        // TODO HungHVd:
         this.setState({list: [...this.state.list, {name: name, isCompleted: false, id: nanoid()}]});
     };
 
     removeTodo = (index) => {
         const { list }=this.state;
+        // TODO HungHVd:
         list.splice(index, 1);
         this.setState({list});
+        
     };
 
 
     handleCheckBox = (id) => {
         const { list } = this.state;
+        // TODO HungVd:
         list.map((todo) => {
             if(todo.id === id) {
                 todo.isCompleted = !todo.isCompleted;
@@ -47,6 +51,7 @@ class TodoList extends React.Component {
 
     checkedALL = () => {
         const { list } = this.state;
+        // TODO HungHVd:
         if(this.isCheckAll()) {
             list.map((todo) => {
                 todo.isCompleted = false;
@@ -61,17 +66,20 @@ class TodoList extends React.Component {
     };
 
     displayList = (status) => {
+        // TODO HungHVd:
         this.setState({statusList: status});
     };
 
     setUpdate = (e, updateName, id) => {
         const {list} = this.state;
+        // TODO HungHVd:
         list.map((todo) => {
             if(todo.id === id) {
                 todo.name = updateName;
                 
             }
         }) 
+        // TODO HungHVd:
         console.log(e);
         this.setState({list});
     };
@@ -223,12 +231,18 @@ class TodoList extends React.Component {
         
         return(
             <div className = "list-container">
-                <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
+                {
+                    // TODO HungHVd:
+                }
+                <Header addTodo={this.addTodo} setKeySearch={this.setKeySearch} displayList = {this.displayList}/>
                 <ul>
+                    {
+                        // TODO HungHVd:
+                    }
                     <div>
                         {_list.map((todo, index) =>
                             <Todo 
-                            name={todo.name} 
+                            name={todo.name} // TODO HungHVd:
                             isCompleted={todo.isCompleted}
                             index={index}
                             removeTodo={this.removeTodo} 

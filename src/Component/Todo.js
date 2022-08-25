@@ -12,6 +12,7 @@ class Todo extends React.Component {
     }
     
     handleRemoveTodo = () => {
+        // TODO HungHVd:
         this.props.removeTodo(this.props.index);
         
     };
@@ -31,6 +32,7 @@ class Todo extends React.Component {
         let viewMode = {};
         let editMode = {};
         const {isCompleted} = this.props;
+        // TODO HungHVd:
         if(this.state.editing) {
             viewMode.display = "none";
         }
@@ -42,8 +44,14 @@ class Todo extends React.Component {
                 <input type = "checkbox" onChange={() => this.props.handleCheckBox(this.props.id)} checked = {isCompleted}/>
                 <li className = {isCompleted ? "completed" : ''}>
                     <div className='todoDisplay' style = {viewMode} onDoubleClick={this.handleEditing}>
+                        {
+                            // TODO HungHVd:
+                        }
                         {this.props.index}. {this.props.name}
                     </div>
+                    {
+                        // TODO HungHVd
+                    }
                     <input onChange={e => {this.props.setUpdate(e, e.target.value, this.props.id)}} onKeyDown = {this.handleUpdate} style={editMode} type = "text"/>
                 </li>
                 <button onClick={this.handleRemoveTodo}>delelte</button>
