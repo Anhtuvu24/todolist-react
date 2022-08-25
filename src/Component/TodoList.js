@@ -35,9 +35,8 @@ class TodoList extends React.Component {
 
     handleCheckBox = (id) => {
         const { list } = this.state;
-        // TODO HungVd:
-        list.map((todo) => {
-            if(todo.id === id) {
+        list.map((todo, index) => {
+            if(todo.id === check) {
                 todo.isCompleted = !todo.isCompleted;
             }
         })
@@ -72,8 +71,7 @@ class TodoList extends React.Component {
 
     setUpdate = (e, updateName, id) => {
         const {list} = this.state;
-        // TODO HungHVd:
-        list.map((todo) => {
+        list.map((todo, index) => {
             if(todo.id === id) {
                 todo.name = updateName;
                 
@@ -89,180 +87,133 @@ class TodoList extends React.Component {
     };
 
     render() {
-        const { list, statusList, keySearch } = this.state;
-        let _list;
-        _list = keySearch ? list.filter(item => item.name.includes(keySearch)) : list;
-        switch(statusList) {
-            case "Complete":
-                _list = _list.filter(item => item.isCompleted);
-                break;
-            case "Active":
-                _list = _list.filter(item => !item.isCompleted);
-                break;
-            default: 
-                break;
-        }
-        // if(statusList === "All") {
-        //     return(//
-        //         <div className = "list-container">
-        //             <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
-        //             <ul>
-        //                 <div>
-        //                     {list.map((todo, index) =>
-        //                         <Todo 
-        //                         name={todo.name} 
-        //                         isCompleted={todo.isCompleted}
-        //                         index={index}
-        //                         removeTodo={this.removeTodo} 
-        //                         handleCheckBox={this.handleCheckBox}
-        //                         id={todo.id}
-        //                         setUpdate = {this.setUpdate}
-        //                         key={todo.id}
-        //                         />
-        //                     )}
-        //                 </div>
-        //             </ul>
+    const { list, statusList, keySearch } = this.state;
+        if(statusList === "All") {
+            return(
+                <div className = "list-container">
+                    <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
+                    <ul>
+                        <div>
+                            {list.map((todo, index) =>
+                                <Todo 
+                                name={todo.name} 
+                                isCompleted={todo.isCompleted}
+                                index={index}
+                                removeTodo={this.removeTodo} 
+                                handleCheckBox={this.handleCheckBox}
+                                id={todo.id}
+                                setUpdate = {this.setUpdate}
+                                key={todo.id}
+                                />
+                            )}
+                        </div>
+                    </ul>
     
-        //             <div className='Container-footer'>
-        //                 <b><i>{list.length}</i> items</b>
-        //                 <button onClick={this.checkedALL}>{this.isCheckAll() ? 'unCompleteALL' :  'completedAll'}</button>
+                    <div className='Container-footer'>
+                        <b><i>{list.length}</i> items</b>
+                        <button onClick={this.checkedALL}>{this.isCheckAll() ? 'unCompleteALL' :  'completedAll'}</button>
                                 
-        //                 <Footer displayList={this.displayList}/>
-        //             </div>
-        //         </div>
-        //     );
-        // }
-        // else if(statusList === "Active") {
-        //     return(
-        //         <div className = "list-container">
-        //             <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
-        //             <ul>
-        //                 <div>
-        //                     {list.map((todo, index) => {
-        //                         if(todo.isCompleted === false) {
-        //                             return(
-        //                             <Todo 
-        //                                 name={todo.name} 
-        //                                 isCompleted={todo.isCompleted}
-        //                                 index={index}
-        //                                 removeTodo={this.removeTodo} 
-        //                                 handleCheckBox={this.handleCheckBox}
-        //                                 id={todo.id}
-        //                                 setUpdate = {this.setUpdate}
-        //                                 key={todo.id}
-        //                             />)
-        //                         }}    
-                                
-        //                     )}
-        //                 </div>
-        //             </ul>
-    
-        //             <div className='Container-footer'>
-        //                 <b><i>{list.length}</i> items</b>                                
-        //                 <Footer displayList={this.displayList}/>
-        //             </div>
-        //         </div>
-        //     );
-        // }
-        // else if (statusList === "Complete") {
-        //     return(
-        //         <div className = "list-container">
-        //             <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
-        //             <ul>
-        //                 <div>
-        //                     {list.map((todo, index) => {
-        //                         if(todo.isCompleted === true) {
-        //                             return(
-        //                             <Todo 
-        //                                 name={todo.name} 
-        //                                 isCompleted={todo.isCompleted}
-        //                                 index={index}
-        //                                 removeTodo={this.removeTodo} 
-        //                                 handleCheckBox={this.handleCheckBox}
-        //                                 id={todo.id}
-        //                                 setUpdate = {this.setUpdate}
-        //                                 key={todo.id}
-        //                             />)
-        //                         }}    
-                                
-        //                     )}
-        //                 </div>
-        //             </ul>
-    
-        //             <div className='Container-footer'>
-        //                 <b><i>{list.length}</i> items</b>                                
-        //                 <Footer displayList={this.displayList}/>
-        //             </div>
-        //         </div>
-        //     );
-        // }
-        // else if(statusList === 'searchList') {
-        //     return(
-        //         <div className = "list-container">
-        //             <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
-        //             <ul>
-        //                 <div>
-        //                     {list.map((todo, index) => {
-        //                         if(todo.name.search(keySearch) >= 0) {
-        //                             return(
-        //                             <Todo 
-        //                                 name={todo.name} 
-        //                                 isCompleted={todo.isCompleted}
-        //                                 index={index}
-        //                                 removeTodo={this.removeTodo} 
-        //                                 handleCheckBox={this.handleCheckBox}
-        //                                 id={todo.id}
-        //                                 setUpdate = {this.setUpdate}
-        //                                 key={todo.id}
-        //                             />)
-        //                         }}    
-                                
-        //                     )}
-        //                 </div>
-        //             </ul>
-    
-        //             <div className='Container-footer'>
-        //                 <b><i>{list.length}</i> items</b>                                
-        //                 <Footer displayList={this.displayList}/>
-        //             </div>
-        //         </div>
-        //     );
-        // }
-        
-        return(
-            <div className = "list-container">
-                {
-                    // TODO HungHVd:
-                }
-                <Header addTodo={this.addTodo} setKeySearch={this.setKeySearch} displayList = {this.displayList}/>
-                <ul>
-                    {
-                        // TODO HungHVd:
-                    }
-                    <div>
-                        {_list.map((todo, index) =>
-                            <Todo 
-                            name={todo.name} // TODO HungHVd:
-                            isCompleted={todo.isCompleted}
-                            index={index}
-                            removeTodo={this.removeTodo} 
-                            handleCheckBox={this.handleCheckBox}
-                            id={todo.id}
-                            setUpdate = {this.setUpdate}
-                            key={todo.id}
-                            />
-                        )}
+                        <Footer displayList={this.displayList}/>
                     </div>
-                </ul>
-
-                <div className='Container-footer'>
-                    <b><i>{list.length}</i> items</b>
-                    <button onClick={this.checkedALL}>{this.isCheckAll() ? 'unCompleteALL' :  'completedAll'}</button>
-                            
-                    <Footer displayList={this.displayList}/>
                 </div>
-            </div>
-        ); 
+            );
+        }
+        else if(statusList === "Active") {
+            return(
+                <div className = "list-container">
+                    <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
+                    <ul>
+                        <div>
+                            {list.map((todo, index) => {
+                                if(todo.isCompleted === false) {
+                                    return(
+                                    <Todo 
+                                        name={todo.name} 
+                                        isCompleted={todo.isCompleted}
+                                        index={index}
+                                        removeTodo={this.removeTodo} 
+                                        handleCheckBox={this.handleCheckBox}
+                                        id={todo.id}
+                                        setUpdate = {this.setUpdate}
+                                        key={todo.id}
+                                    />)
+                                }}    
+                                
+                            )}
+                        </div>
+                    </ul>
+    
+                    <div className='Container-footer'>
+                        <b><i>{list.length}</i> items</b>                                
+                        <Footer displayList={this.displayList}/>
+                    </div>
+                </div>
+            );
+        }
+        else if (statusList === "Complete") {
+            return(
+                <div className = "list-container">
+                    <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
+                    <ul>
+                        <div>
+                            {list.map((todo, index) => {
+                                if(todo.isCompleted === true) {
+                                    return(
+                                    <Todo 
+                                        name={todo.name} 
+                                        isCompleted={todo.isCompleted}
+                                        index={index}
+                                        removeTodo={this.removeTodo} 
+                                        handleCheckBox={this.handleCheckBox}
+                                        id={todo.id}
+                                        setUpdate = {this.setUpdate}
+                                        key={todo.id}
+                                    />)
+                                }}    
+                                
+                            )}
+                        </div>
+                    </ul>
+    
+                    <div className='Container-footer'>
+                        <b><i>{list.length}</i> items</b>                                
+                        <Footer displayList={this.displayList}/>
+                    </div>
+                </div>
+            );
+        }
+        else if(statusList === 'searchList') {
+            return(
+                <div className = "list-container">
+                    <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
+                    <ul>
+                        <div>
+                            {list.map((todo, index) => {
+                                if(todo.name.search(keySearch) >= 0) {
+                                    return(
+                                    <Todo 
+                                        name={todo.name} 
+                                        isCompleted={todo.isCompleted}
+                                        index={index}
+                                        removeTodo={this.removeTodo} 
+                                        handleCheckBox={this.handleCheckBox}
+                                        id={todo.id}
+                                        setUpdate = {this.setUpdate}
+                                        key={todo.id}
+                                    />)
+                                }}    
+                                
+                            )}
+                        </div>
+                    </ul>
+    
+                    <div className='Container-footer'>
+                        <b><i>{list.length}</i> items</b>                                
+                        <Footer displayList={this.displayList}/>
+                    </div>
+                </div>
+            );
+        }
     }
 }
 
