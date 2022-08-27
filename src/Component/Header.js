@@ -6,7 +6,6 @@ class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            
             todo: '',
             keyWord: '',
         }
@@ -14,7 +13,6 @@ class Header extends React.Component {
 
     handleAddTodo = () => {
         const {todo} = this.state;
-        // TODO HungHVd:
         if(todo !== '') {
         this.props.addTodo(todo);
         this.setState({todo: ''})
@@ -23,7 +21,6 @@ class Header extends React.Component {
 
     handleKeyPress = (e) => {
         const {todo} = this.state;
-        // TODO HungHVd:
         if(todo !== '' && e.key === 'Enter') {
             this.props.addTodo(todo);
             this.setState({todo: ''})
@@ -45,22 +42,28 @@ class Header extends React.Component {
         this.props.setKeySearch(keyWord);
     } 
 
-    // TODO HungHVd:
     handleChangeSearch = (e) => {
         this.setState({keyWord: e.target.value});
     };
+
+    x = (e) => {
+        const { name, value } = e.target;
+        this.setState({
+            [name]: value,
+        })
+    }
 
     render() {
         const {todo, keyWord} = this.state;
         return(
             <div>
                 <div className='searchKeyWord'>
-                    <input type = 'text' placeholder='Key word' value = {keyWord} onChange = {this.handleChangeSearch} onKeyDown = {this.handleSearchKeyPress} />    
+                    <input name="keyWord" type = 'text' placeholder='Key word' value = {keyWord} onChange = {this.handleChangeSearch} onKeyDown = {this.handleSearchKeyPress} />    
                     <button type = "submit" onClick={this.handleSearch}>Search</button>
                 </div>
                 <div className='Container-header'>
                     <h1>TODO LIST</h1>
-                    <input type = "text" placeholder = "What do you want to do?" value = {todo} onKeyDown = {this.handleKeyPress}  onChange={this.handleChange}/>
+                    <input name="todo" type = "text" placeholder = "What do you want to do?" value = {todo} onKeyDown = {this.handleKeyPress}  onChange={this.handleChange}/>
                     <button type = "submit" onClick={this.handleAddTodo}>Add</button>
                 </div>
             </div>
@@ -69,4 +72,3 @@ class Header extends React.Component {
 }
 
 export default Header;
-
