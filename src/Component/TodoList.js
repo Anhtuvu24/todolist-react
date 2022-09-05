@@ -6,11 +6,22 @@ import { nanoid } from 'nanoid';
 import Footer from './Footer';
 import Page from './Page'
 import '../CSS/TodoList.css'
+import {themes, Theme} from './theme';
+import ThemeButton from './ThemeButton';
 
 
 class TodoList extends React.Component {
     constructor(props) {
         super(props);
+        this.toggleTheme = () => {
+            this.setState(state => ({
+              theme:
+                state.theme === themes.dark
+                  ? themes.light
+                  : themes.dark,
+            }));
+            console.log(this.state.theme)
+          };
         this.state = {
             list: [
                 {
@@ -34,6 +45,8 @@ class TodoList extends React.Component {
             statusList: "All",
             keySearch: '',
             numberPage: 1,
+            theme: themes.light,
+            toggleTheme: this.toggleTheme,
         };
     }
 
@@ -109,9 +122,13 @@ class TodoList extends React.Component {
     getPage = (numberPage) => {
         this.setState({numberPage});
     }
+        
+    handleSetTheme = (theme) => {
+        this.setState({theme});
+    }
 
     render() {
-        const { list, statusList, keySearch } = this.state;
+        const { list, statusList, keySearch, theme, toggleTheme } = this.state;
         let _list;
         _list = keySearch ? list.filter(item => item.name.includes(keySearch)) : list;
         switch(statusList) {
@@ -250,41 +267,47 @@ class TodoList extends React.Component {
         //         </div>
         //     );
         // }
-        
-        return(
-            <div className = "list-container">
-                <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
-                <ul>
-                    <div>
-                        {_list.map((todo, index) => {
-                            debugger;
-                            if(index < (this.state.numberPage * 3) && index >= (this.state.numberPage * 3 - 3)) {
-                               debugger;
-                                return (
-                                    <Todo 
-                                        name={todo.name} 
-                                        isCompleted={todo.isCompleted}
-                                        index={index}
-                                        removeTodo={this.removeTodo} 
-                                        handleCheckBox={this.handleCheckBox}
-                                        id={todo.id}
-                                        setUpdate = {this.setUpdate}
-                                        key={todo.id}
-                                    />
-                               ) 
-                            }
-                            return null;
-                        })}
-                    </div>
-                </ul>
-                <Page getPage = {this.getPage} longList = {Math.ceil(list.length / 3)}/>       
 
-                <div className='Container-footer'>
-                    <b><i>{list.length}</i> items</b>
-                    <button onClick={this.checkedALL}>{this.isCheckAll() ? 'unCompleteALL' :  'completedAll'}</button>
-                    <Footer displayList={this.displayList}/>
+        return(
+            <>
+                <div style={{backgroundColor: theme.backgroundColor, color: theme.color}} className = "list-container">
+                    <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
+                    <ul>
+                        <div>
+                            {_list.map((todo, index) => {
+                                if(index < (this.state.numberPage * 3) && index >= (this.state.numberPage * 3 - 3)) {
+                                debugger;
+                                    return (
+                                        <Todo 
+                                            name={todo.name} 
+                                            isCompleted={todo.isCompleted}
+                                            index={index}
+                                            removeTodo={this.removeTodo} 
+                                            handleCheckBox={this.handleCheckBox}
+                                            id={todo.id}
+                                            setUpdate = {this.setUpdate}
+                                            key={todo.id}
+                                        />
+                                ) 
+                                }
+                                return null;
+                            })}
+                        </div>
+                    </ul>
+                    <Page getPage = {this.getPage} longList = {Math.ceil(list.length / 3)}/>       
+
+                    <div className='Container-footer'>
+                        <b><i>{list.length}</i> items</b>
+                        <button onClick={this.checkedALL}>{this.isCheckAll() ? 'unCompleteALL' :  'completedAll'}</button>
+                        <Footer displayList={this.displayList}/>
+                    </div>
                 </div>
-            </div>
+                
+
+                <Theme.Provider value={{theme, toggleTheme}}>
+                    <ThemeButton />
+                </Theme.Provider>   
+            </>
         ); 
     }
 }

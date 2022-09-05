@@ -7,7 +7,6 @@
 h1 {
     font-size: 56px;
     margin: 20px;
-    color: rgba(175, 47, 47, 0.15);
 }
 
 .searchKeyWord input, .Container-header input {
@@ -29,5 +28,6 @@ h1 {
 
 .searchKeyWord button:hover, .Container-header button:hover {
     background-color: rgba(175, 47, 47, 0.15);
+    color: red;
 
 }
