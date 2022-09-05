@@ -19,7 +19,7 @@
 }
 
 .todoDisplay {
-    width: 250px;
+    width: 200px;
 }
 
 
@@ -30,7 +30,7 @@
 
 .todo-container button {
     background-color: white;
-    width: 50px;
+    width: 80px;
     height: 30px;
     border: none;
     border-radius: 5px;

@@ -6,65 +6,50 @@ class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            todo: '',
-            keyWord: '',
+            valueInput: '',
         }
     };
 
     handleAddTodo = () => {
-        const {todo} = this.state;
-        if(todo !== '') {
-        this.props.addTodo(todo);
-        this.setState({todo: ''})
+        const {valueInput} = this.state;
+        if(valueInput !== '') {
+            this.props.addTodo(valueInput);
+            this.setState({valueInput: ''})
         }
     };
 
     handleKeyPress = (e) => {
-        const {todo} = this.state;
-        if(todo !== '' && e.key === 'Enter') {
-            this.props.addTodo(todo);
-            this.setState({todo: ''})
+        const {valueInput} = this.state;
+        if(valueInput !== '' && e.key === 'Enter') {
+            this.props.addTodo(valueInput);
+            this.setState({valueInput: ''})
         }
-    };
-
-    handleChange = (e) => {
-        this.setState({todo: e.target.value});
     };
 //------------------------------Search------------------------------
-    handleSearchKeyPress = (e) => { //
-        if(e.key === 'Enter') {
-            this.handleSearch();
-        }
-    };
+    // handleSearchKeyPress = (e) => { //
+    //     if(e.key === 'Enter') {
+    //         this.handleSearch();
+    //     }
+    // };
 
     handleSearch = () => {
-        const {keyWord} = this.state;
-        this.props.setKeySearch(keyWord);
+        const {valueInput} = this.state;
+        this.props.setKeySearch(valueInput);
     } 
 
-    handleChangeSearch = (e) => {
-        this.setState({keyWord: e.target.value});
+    handleChange = (e) => {
+        this.setState({valueInput: e.target.value});
     };
 
-    x = (e) => {
-        const { name, value } = e.target;
-        this.setState({
-            [name]: value,
-        })
-    }
-
     render() {
-        const {todo, keyWord} = this.state;
+        const {valueInput} = this.state;
         return(
             <div>
-                <div className='searchKeyWord'>
-                    <input name="keyWord" type = 'text' placeholder='Key word' value = {keyWord} onChange = {this.handleChangeSearch} onKeyDown = {this.handleSearchKeyPress} />    
-                    <button type = "submit" onClick={this.handleSearch}>Search</button>
-                </div>
                 <div className='Container-header'>
                     <h1>TODO LIST</h1>
-                    <input name="todo" type = "text" placeholder = "What do you want to do?" value = {todo} onKeyDown = {this.handleKeyPress}  onChange={this.handleChange}/>
-                    <button type = "submit" onClick={this.handleAddTodo}>Add</button>
+                    <input type = "text" placeholder = "What do you want to do?" value = {valueInput} onKeyDown = {this.handleKeyPress}  onChange={this.handleChange}/>
+                    <button value='add' type = "submit" onClick={this.handleAddTodo}>Add</button>
+                    <button value='search' type = "submit" onClick={this.handleSearch}>Search</button>
                 </div>
             </div>
         )

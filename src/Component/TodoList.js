@@ -5,9 +5,9 @@ import Header from './Header';
 import { nanoid } from 'nanoid';
 import Footer from './Footer';
 import Page from './Page'
-import '../CSS/TodoList.css'
 import {themes, Theme} from './theme';
 import ThemeButton from './ThemeButton';
+import '../CSS/TodoList.css'
 
 
 class TodoList extends React.Component {
@@ -21,7 +21,7 @@ class TodoList extends React.Component {
                   : themes.dark,
             }));
             console.log(this.state.theme)
-          };
+        };
         this.state = {
             list: [
                 {
@@ -40,14 +40,49 @@ class TodoList extends React.Component {
                     name: 'todo3',
                     id: 2,
                     isCompleted: false,
+                },
+                {
+                    name: 'todo1',
+                    id: 3,
+                    isCompleted: false,
+                },
+
+                {
+                    name: 'todo2',
+                    id: 4,
+                    isCompleted: false,
+                },
+
+                {
+                    name: 'todo3',
+                    id: 5,
+                    isCompleted: false,
+                },
+                {
+                    name: 'todo1',
+                    id: 6,
+                    isCompleted: false,
+                },
+
+                {
+                    name: 'todo2',
+                    id: 7,
+                    isCompleted: false,
+                },
+
+                {
+                    name: 'todo3',
+                    id: 8,
+                    isCompleted: false,
                 }
             ],
             statusList: "All",
             keySearch: '',
             numberPage: 1,
-            theme: themes.light,
+            limitTodo: 3,theme: themes.light,
             toggleTheme: this.toggleTheme,
         };
+        this.scrollRef = React.createRef();
     }
 
     addTodo = (name) => {
@@ -122,191 +157,83 @@ class TodoList extends React.Component {
     getPage = (numberPage) => {
         this.setState({numberPage});
     }
+
+    scrollBottomDom = (dom) => {
+        let _scrollEHeight;
+        let _clientHeight;
+        let _maxScrollTop;
+        let _topInvisible;
+        _scrollEHeight = dom.scrollHeight;
+        _clientHeight = dom.clientHeight;
+        // dung clientHeight
+        _maxScrollTop = _scrollEHeight - _clientHeight;
+        _topInvisible = dom.scrollTop;
+        return _maxScrollTop - _topInvisible;
         
+    };
+
+    setScrollRef = (e) => {
+        this.scrollRef = (e);
+    }
+
+    onScroll = () => {
+        const bot = this.scrollBottomDom(this.scrollRef)
+        console.log(bot);
+        if(bot < 5) {
+            debugger;
+            this.setState(state => ({
+                limitTodo: state.limitTodo + 1
+            }))
+        }
+    }
+
     handleSetTheme = (theme) => {
         this.setState({theme});
     }
 
     render() {
-        const { list, statusList, keySearch, theme, toggleTheme } = this.state;
-        let _list;
-        _list = keySearch ? list.filter(item => item.name.includes(keySearch)) : list;
-        switch(statusList) {
-            case "Complete":
-                _list = _list.filter(item => item.isCompleted);
-                break;
-            case "Active":
-                _list = _list.filter(item => !item.isCompleted);
-                break;
-            default: 
-                break;
-        }
-        // if(statusList === "All") {
-        //     return(//
-        //         <div className = "list-container">
-        //             <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
-        //             <ul>
-        //                 <div>
-        //                     {list.map((todo, index) =>
-        //                         <Todo 
-        //                         name={todo.name} 
-        //                         isCompleted={todo.isCompleted}
-        //                         index={index}
-        //                         removeTodo={this.removeTodo} 
-        //                         handleCheckBox={this.handleCheckBox}
-        //                         id={todo.id}
-        //                         setUpdate = {this.setUpdate}
-        //                         key={todo.id}
-        //                         />
-        //                     )}
-        //                 </div>
-        //             </ul>
-    
-        //             <div className='Container-footer'>
-        //                 <b><i>{list.length}</i> items</b>
-        //                 <button onClick={this.checkedALL}>{this.isCheckAll() ? 'unCompleteALL' :  'completedAll'}</button>
-                                
-        //                 <Footer displayList={this.displayList}/>
-        //             </div>
-        //         </div>
-        //     );
-        // }
-        // else if(statusList === "Active") {
-        //     return(
-        //         <div className = "list-container">
-        //             <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
-        //             <ul>
-        //                 <div>
-        //                     {list.map((todo, index) => {
-        //                         if(todo.isCompleted === false) {
-        //                             return(
-        //                             <Todo 
-        //                                 name={todo.name} 
-        //                                 isCompleted={todo.isCompleted}
-        //                                 index={index}
-        //                                 removeTodo={this.removeTodo} 
-        //                                 handleCheckBox={this.handleCheckBox}
-        //                                 id={todo.id}
-        //                                 setUpdate = {this.setUpdate}
-        //                                 key={todo.id}
-        //                             />)
-        //                         }}    
-                                
-        //                     )}
-        //                 </div>
-        //             </ul>
-    
-        //             <div className='Container-footer'>
-        //                 <b><i>{list.length}</i> items</b>                                
-        //                 <Footer displayList={this.displayList}/>
-        //             </div>
-        //         </div>
-        //     );
-        // }
-        // else if (statusList === "Complete") {
-        //     return(
-        //         <div className = "list-container">
-        //             <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
-        //             <ul>
-        //                 <div>
-        //                     {list.map((todo, index) => {
-        //                         if(todo.isCompleted === true) {
-        //                             return(
-        //                             <Todo 
-        //                                 name={todo.name} 
-        //                                 isCompleted={todo.isCompleted}
-        //                                 index={index}
-        //                                 removeTodo={this.removeTodo} 
-        //                                 handleCheckBox={this.handleCheckBox}
-        //                                 id={todo.id}
-        //                                 setUpdate = {this.setUpdate}
-        //                                 key={todo.id}
-        //                             />)
-        //                         }}    
-                                
-        //                     )}
-        //                 </div>
-        //             </ul>
-    
-        //             <div className='Container-footer'>
-        //                 <b><i>{list.length}</i> items</b>                                
-        //                 <Footer displayList={this.displayList}/>
-        //             </div>
-        //         </div>
-        //     );
-        // }
-        // else if(statusList === 'searchList') {
-        //     return(
-        //         <div className = "list-container">
-        //             <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
-        //             <ul>
-        //                 <div>
-        //                     {list.map((todo, index) => {
-        //                         if(todo.name.search(keySearch) >= 0) {
-        //                             return(
-        //                             <Todo 
-        //                                 name={todo.name} 
-        //                                 isCompleted={todo.isCompleted}
-        //                                 index={index}
-        //                                 removeTodo={this.removeTodo} 
-        //                                 handleCheckBox={this.handleCheckBox}
-        //                                 id={todo.id}
-        //                                 setUpdate = {this.setUpdate}
-        //                                 key={todo.id}
-        //                             />)
-        //                         }}    
-                                
-        //                     )}
-        //                 </div>
-        //             </ul>
-    
-        //             <div className='Container-footer'>
-        //                 <b><i>{list.length}</i> items</b>                                
-        //                 <Footer displayList={this.displayList}/>
-        //             </div>
-        //         </div>
-        //     );
-        // }
-
+        const { list, statusList, keySearch, numberPage, limitTodo, theme, toggleTheme } = this.state;
+        console.log(this.scrollRef);
         return(
             <>
                 <div style={{backgroundColor: theme.backgroundColor, color: theme.color}} className = "list-container">
                     <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
-                    <ul>
-                        <div>
-                            {_list.map((todo, index) => {
-                                if(index < (this.state.numberPage * 3) && index >= (this.state.numberPage * 3 - 3)) {
-                                debugger;
-                                    return (
-                                        <Todo 
-                                            name={todo.name} 
-                                            isCompleted={todo.isCompleted}
-                                            index={index}
-                                            removeTodo={this.removeTodo} 
-                                            handleCheckBox={this.handleCheckBox}
-                                            id={todo.id}
-                                            setUpdate = {this.setUpdate}
-                                            key={todo.id}
-                                        />
+                    <div onScroll={this.onScroll} ref={this.setScrollRef} style={{marginTop: 20,  overflowY: "scroll", height: 200 }}>
+                        {list.map((todo, index) => {
+                            let flag = false;
+                            if(
+                                (
+                                    (todo.isCompleted && statusList === 'Complete') || 
+                                    (!todo.isCompleted && statusList === 'Active') || 
+                                    statusList === 'All'
+                                ) && 
+                                (keySearch ? todo.name.includes(keySearch) : true) &&
+                                (index < limitTodo)) 
+                            {
+                                flag = true;
+                                return flag && (
+                                    <Todo 
+                                        name={todo.name} 
+                                        isCompleted={todo.isCompleted}
+                                        index={index}
+                                        removeTodo={this.removeTodo} 
+                                        handleCheckBox={this.handleCheckBox}
+                                        id={todo.id}
+                                        setUpdate = {this.setUpdate}
+                                        key={todo.id}
+                                    />
                                 ) 
-                                }
-                                return null;
-                            })}
-                        </div>
-                    </ul>
+                            }
+                            return null;
+                        })}
+                    </div>
                     <Page getPage = {this.getPage} longList = {Math.ceil(list.length / 3)}/>       
-
                     <div className='Container-footer'>
                         <b><i>{list.length}</i> items</b>
                         <button onClick={this.checkedALL}>{this.isCheckAll() ? 'unCompleteALL' :  'completedAll'}</button>
                         <Footer displayList={this.displayList}/>
                     </div>
                 </div>
-                
-
-                <Theme.Provider value={{theme, toggleTheme}}>
-                    <ThemeButton />
-                </Theme.Provider>   
             </>
         ); 
     }
