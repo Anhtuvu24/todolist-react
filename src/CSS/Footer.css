@@ -11,3 +11,16 @@
 .filterList button {
     margin: 4px;
 }
+
+.filterList > button:not(.active):hover {
+    background: rgb(62, 140, 204);
+    color: red;
+}
+
+.filterList > button.active {
+    border-color: grey;
+    color: red;
+    background: rgb(62, 140, 204);
+    cursor: default;
+}
+
