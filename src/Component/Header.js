@@ -7,21 +7,31 @@ class Header extends React.Component {
         super(props);
         this.state = {
             valueInput: '',
+            statusInput: 'Add',
+            editID: '',
         }
+        this.refInput = React.createRef();
     };
 
-    handleAddTodo = () => {
-        const {valueInput} = this.state;
-        if(valueInput !== '') {
-            this.props.addTodo(valueInput);
+    handleAddTodo = (id) => {
+        const {valueInput, statusInput} = this.state;
+        const { addTodo, editTodo } = this.props;
+        if(valueInput !== '' && statusInput === 'Add') {
+            addTodo(valueInput);
             this.setState({valueInput: ''})
+        }
+        else if(valueInput !== '' && statusInput === 'Edit') {
+            editTodo(valueInput, id);
+            this.setState({valueInput: ''})
+            this.setState({statusInput: 'Add'})
         }
     };
 
     handleKeyPress = (e) => {
-        const {valueInput} = this.state;
-        if(valueInput !== '' && e.key === 'Enter') {
-            this.props.addTodo(valueInput);
+        const { addTodo } = this.props;
+        const {valueInput, statusInput} = this.state;
+        if(statusInput === 'Add' && valueInput !== '' && e.key === 'Enter') {
+            addTodo(valueInput);
             this.setState({valueInput: ''})
         }
     };
@@ -31,6 +41,12 @@ class Header extends React.Component {
     //         this.handleSearch();
     //     }
     // };
+
+    onFocusInput = (name, id) => {
+        this.refInput.current.focus();
+        this.setState({valueInput: name, statusInput: 'Edit', editID: id});
+        //console.log(this.refInput) // -> input
+    }
 
     handleSearch = () => {
         const {valueInput} = this.state;
@@ -42,15 +58,20 @@ class Header extends React.Component {
     };
 
     render() {
-        const {valueInput} = this.state;
+        const {valueInput, statusInput, editID} = this.state;
         return(
-            <div>
-                <div className='Container-header'>
-                    <h1>TODO LIST</h1>
-                    <input type = "text" placeholder = "What do you want to do?" value = {valueInput} onKeyDown = {this.handleKeyPress}  onChange={this.handleChange}/>
-                    <button value='add' type = "submit" onClick={this.handleAddTodo}>Add</button>
-                    <button value='search' type = "submit" onClick={this.handleSearch}>Search</button>
-                </div>
+            <div className='Container-header'>
+                <h1>TODO LIST</h1>
+                <input 
+                    ref={this.refInput} 
+                    type = "text" 
+                    placeholder = "What do you want to do?" 
+                    value = {valueInput} 
+                    onKeyDown = {this.handleKeyPress}  
+                    onChange={this.handleChange}
+                />
+                <button value='add' type = "submit" onClick={() => this.handleAddTodo(editID)}>{statusInput}</button>
+                <button value='search' type = "submit" onClick={this.handleSearch}>Search</button>
             </div>
         )
     }

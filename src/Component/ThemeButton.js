@@ -8,7 +8,7 @@ class ThemeButton extends React.Component {
                 <Theme.Consumer> 
                     {({theme, toggleTheme}) => (
                         <button onClick={toggleTheme} style={{backgroundColor: theme.backgroundColor, color: theme.color}}>
-                            {'Dark' ? 'Dark' : 'Light'}
+                            Change theme
                         </button>
                     )}
                 </Theme.Consumer>

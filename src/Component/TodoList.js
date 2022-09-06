@@ -4,9 +4,9 @@ import Todo from './Todo';
 import Header from './Header';
 import { nanoid } from 'nanoid';
 import Footer from './Footer';
-import Page from './Page'
 import {themes, Theme} from './theme';
 import ThemeButton from './ThemeButton';
+import TodoListItemHOC from './TodoListItem'
 import '../CSS/TodoList.css'
 
 
@@ -81,8 +81,9 @@ class TodoList extends React.Component {
             numberPage: 1,
             limitTodo: 3,theme: themes.light,
             toggleTheme: this.toggleTheme,
+            isLoading: false,
         };
-        this.scrollRef = React.createRef();
+        this.headerRef = React.createRef();
     }
 
     addTodo = (name) => {
@@ -135,20 +136,26 @@ class TodoList extends React.Component {
         this.setState({list});    
     };
 
-    displayList = (status) => {
-        this.setState({statusList: status});
+    displayList = (statusList) => {
+        this.setState({statusList})
+        console.log(this.state.statusList)
     };
 
-    setUpdate = (updateName, id) => {
-        const {list} = this.state;
-        list.map((todo) => {
+    editMode = (name, id) => {
+        this.headerRef.current.onFocusInput(name, id);
+        //console.log(this.headerRef.current);
+    }
+
+    editTodo = (name, id) => {
+        const { list } = this.state;
+        list.map(todo => {
             if(todo.id === id) {
-                todo.name = updateName;
-                
+                console.log(todo.id);
+                todo.name = name;
             }
-        }) 
+        })
         this.setState({list});
-    };
+    }
 
     setKeySearch = (keySearch) => {
         this.setState({keySearch});
@@ -158,82 +165,43 @@ class TodoList extends React.Component {
         this.setState({numberPage});
     }
 
-    scrollBottomDom = (dom) => {
-        let _scrollEHeight;
-        let _clientHeight;
-        let _maxScrollTop;
-        let _topInvisible;
-        _scrollEHeight = dom.scrollHeight;
-        _clientHeight = dom.clientHeight;
-        // dung clientHeight
-        _maxScrollTop = _scrollEHeight - _clientHeight;
-        _topInvisible = dom.scrollTop;
-        return _maxScrollTop - _topInvisible;
-        
-    };
-
-    setScrollRef = (e) => {
-        this.scrollRef = (e);
-    }
-
-    onScroll = () => {
-        const bot = this.scrollBottomDom(this.scrollRef)
-        console.log(bot);
-        if(bot < 5) {
-            debugger;
-            this.setState(state => ({
-                limitTodo: state.limitTodo + 1
-            }))
-        }
-    }
-
     handleSetTheme = (theme) => {
         this.setState({theme});
     }
 
     render() {
-        const { list, statusList, keySearch, numberPage, limitTodo, theme, toggleTheme } = this.state;
-        console.log(this.scrollRef);
+        const { list, statusList, keySearch, theme, toggleTheme } = this.state;
         return(
             <>
                 <div style={{backgroundColor: theme.backgroundColor, color: theme.color}} className = "list-container">
-                    <Header addTodo={this.addTodo} setKeySearch = {this.setKeySearch} displayList = {this.displayList}/>
-                    <div onScroll={this.onScroll} ref={this.setScrollRef} style={{marginTop: 20,  overflowY: "scroll", height: 200 }}>
-                        {list.map((todo, index) => {
-                            let flag = false;
-                            if(
-                                (
-                                    (todo.isCompleted && statusList === 'Complete') || 
-                                    (!todo.isCompleted && statusList === 'Active') || 
-                                    statusList === 'All'
-                                ) && 
-                                (keySearch ? todo.name.includes(keySearch) : true) &&
-                                (index < limitTodo)) 
-                            {
-                                flag = true;
-                                return flag && (
-                                    <Todo 
-                                        name={todo.name} 
-                                        isCompleted={todo.isCompleted}
-                                        index={index}
-                                        removeTodo={this.removeTodo} 
-                                        handleCheckBox={this.handleCheckBox}
-                                        id={todo.id}
-                                        setUpdate = {this.setUpdate}
-                                        key={todo.id}
-                                    />
-                                ) 
-                            }
-                            return null;
-                        })}
-                    </div>
-                    <Page getPage = {this.getPage} longList = {Math.ceil(list.length / 3)}/>       
+                    <Header 
+                        addTodo={this.addTodo} 
+                        setKeySearch={this.setKeySearch} 
+                        displayList={this.displayList}
+                        ref={this.headerRef}
+                        editTodo={this.editTodo}
+                    />
+                    
+                    <TodoListItemHOC 
+                        list={list}
+                        statusList={statusList}
+                        keySearch={keySearch}
+                        removeTodo={this.removeTodo}
+                        handleCheckBox={this.handleCheckBox}
+                        setUpdate={this.setUpdate}
+                        editMode={this.editMode}
+                    />
+                    {/* <Page getPage = {this.getPage} longList = {Math.ceil(list.length / 3)}/>        */}
                     <div className='Container-footer'>
                         <b><i>{list.length}</i> items</b>
                         <button onClick={this.checkedALL}>{this.isCheckAll() ? 'unCompleteALL' :  'completedAll'}</button>
                         <Footer displayList={this.displayList}/>
                     </div>
                 </div>
+
+                <Theme.Provider value={{theme, toggleTheme}}>
+                    <ThemeButton />
+                </Theme.Provider>  
             </>
         ); 
     }
