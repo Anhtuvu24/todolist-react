@@ -13,15 +13,6 @@ import '../CSS/TodoList.css'
 class TodoList extends React.Component {
     constructor(props) {
         super(props);
-        this.toggleTheme = () => {
-            this.setState(state => ({
-              theme:
-                state.theme === themes.dark
-                  ? themes.light
-                  : themes.dark,
-            }));
-            console.log(this.state.theme)
-        };
         this.state = {
             list: [
                 {
@@ -79,12 +70,21 @@ class TodoList extends React.Component {
             statusList: "All",
             keySearch: '',
             numberPage: 1,
-            limitTodo: 3,theme: themes.light,
-            toggleTheme: this.toggleTheme,
+            limitTodo: 3,
+            theme: themes.light,
             isLoading: false,
         };
         this.headerRef = React.createRef();
     }
+
+    toggleTheme = () => {
+        this.setState(state => ({
+          theme:
+            state.theme === themes.dark
+              ? themes.light
+              : themes.dark,
+        }));
+    };
 
     addTodo = (name) => {
         // this.setState({list: [...this.state.list, {name: name, isCompleted: false, id: nanoid()}]});
@@ -170,7 +170,7 @@ class TodoList extends React.Component {
     }
 
     render() {
-        const { list, statusList, keySearch, theme, toggleTheme } = this.state;
+        const { list, statusList, keySearch, theme } = this.state;
         return(
             <>
                 <div style={{backgroundColor: theme.backgroundColor, color: theme.color}} className = "list-container">
@@ -199,7 +199,7 @@ class TodoList extends React.Component {
                     </div>
                 </div>
 
-                <Theme.Provider value={{theme, toggleTheme}}>
+                <Theme.Provider value={{theme, toggleTheme: this.toggleTheme}}>
                     <ThemeButton />
                 </Theme.Provider>  
             </>
