@@ -6,24 +6,24 @@ import {themes, Theme} from './Component/theme';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.toggleTheme = () => {
-      this.setState(state => ({
-        theme:
-          state.theme === themes.dark
-            ? themes.light
-            : themes.dark,
-      }));
-    };
     this.state = {
       theme: themes.light,
-      toggleTheme: this.toggleTheme,
     }
   }
 
+  toggleTheme = () => {
+    this.setState(state => ({
+      theme:
+        state.theme === themes.dark
+          ? themes.light
+          : themes.dark,
+    }));
+  };
+
   render() {
-    const { theme, toggleTheme } = this.state;
+    const { theme} = this.state;
     return(
-      <Theme.Provider value = {{theme, toggleTheme}}>
+      <Theme.Provider value = {{theme, toggleTheme: this.toggleTheme}}>
         <TodoList />
       </Theme.Provider>
     )
