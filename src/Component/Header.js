@@ -28,11 +28,16 @@ class Header extends React.Component {
     };
 
     handleKeyPress = (e) => {
-        const { addTodo } = this.props;
-        const {valueInput, statusInput} = this.state;
+        const { addTodo, editTodo } = this.props;
+        const {valueInput, statusInput, editID} = this.state;
         if(statusInput === 'Add' && valueInput !== '' && e.key === 'Enter') {
             addTodo(valueInput);
             this.setState({valueInput: ''})
+        }
+        else if(statusInput === 'Edit' && valueInput !== '' && e.key === 'Enter') {
+            editTodo(valueInput, editID);
+            this.setState({valueInput: ''})
+            this.setState({statusInput: 'Add'})
         }
     };
 //------------------------------Search------------------------------

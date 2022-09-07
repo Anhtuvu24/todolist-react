@@ -13,15 +13,6 @@ import '../CSS/TodoList.css'
 class TodoList extends React.Component {
     constructor(props) {
         super(props);
-        this.toggleTheme = () => {
-            this.setState(state => ({
-              theme:
-                state.theme === themes.dark
-                  ? themes.light
-                  : themes.dark,
-            }));
-            console.log(this.state.theme)
-        };
         this.state = {
             list: [
                 {
@@ -79,8 +70,7 @@ class TodoList extends React.Component {
             statusList: "All",
             keySearch: '',
             numberPage: 1,
-            limitTodo: 3,theme: themes.light,
-            toggleTheme: this.toggleTheme,
+            limitTodo: 3,
             isLoading: false,
         };
         this.headerRef = React.createRef();
@@ -170,38 +160,39 @@ class TodoList extends React.Component {
     }
 
     render() {
-        const { list, statusList, keySearch, theme, toggleTheme } = this.state;
+        const { list, statusList, keySearch } = this.state;
         return(
             <>
-                <div style={{backgroundColor: theme.backgroundColor, color: theme.color}} className = "list-container">
-                    <Header 
-                        addTodo={this.addTodo} 
-                        setKeySearch={this.setKeySearch} 
-                        displayList={this.displayList}
-                        ref={this.headerRef}
-                        editTodo={this.editTodo}
-                    />
-                    
-                    <TodoListItemHOC 
-                        list={list}
-                        statusList={statusList}
-                        keySearch={keySearch}
-                        removeTodo={this.removeTodo}
-                        handleCheckBox={this.handleCheckBox}
-                        setUpdate={this.setUpdate}
-                        editMode={this.editMode}
-                    />
-                    {/* <Page getPage = {this.getPage} longList = {Math.ceil(list.length / 3)}/>        */}
-                    <div className='Container-footer'>
-                        <b><i>{list.length}</i> items</b>
-                        <button onClick={this.checkedALL}>{this.isCheckAll() ? 'unCompleteALL' :  'completedAll'}</button>
-                        <Footer displayList={this.displayList}/>
-                    </div>
-                </div>
-
-                <Theme.Provider value={{theme, toggleTheme}}>
-                    <ThemeButton />
-                </Theme.Provider>  
+                <Theme.Consumer>
+                    {({theme, toggleTheme}) => (
+                        <div style={{backgroundColor: theme.backgroundColor, color: theme.color}} className = "list-container">
+                            <Header 
+                                addTodo={this.addTodo} 
+                                setKeySearch={this.setKeySearch} 
+                                displayList={this.displayList}
+                                ref={this.headerRef}
+                                editTodo={this.editTodo}
+                            />
+                            
+                            <TodoListItemHOC 
+                                list={list}
+                                statusList={statusList}
+                                keySearch={keySearch}
+                                removeTodo={this.removeTodo}
+                                handleCheckBox={this.handleCheckBox}
+                                setUpdate={this.setUpdate}
+                                editMode={this.editMode}
+                            />
+                            {/* <Page getPage = {this.getPage} longList = {Math.ceil(list.length / 3)}/>        */}
+                            <div className='Container-footer'>
+                                <b><i>{list.length}</i> items</b>
+                                <button onClick={this.checkedALL}>{this.isCheckAll() ? 'unCompleteALL' :  'completedAll'}</button>
+                                <Footer displayList={this.displayList}/>
+                            </div>
+                        </div>
+                    )}
+                </Theme.Consumer>
+                <ThemeButton />
             </>
         ); 
     }
