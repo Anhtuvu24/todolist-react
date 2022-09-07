@@ -155,6 +155,7 @@ class TodoList extends React.Component {
             <>
                 <Theme.Consumer>
                     {({ theme, toggleTheme }) => (
+                        //fix-------------------------------------
                         <div style={{ backgroundColor: theme.backgroundColor, color: theme.color }} className="list-container">
                             <Header
                                 addTodo={this.addTodo}

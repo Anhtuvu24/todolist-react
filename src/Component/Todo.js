@@ -13,16 +13,19 @@ class Todo extends React.Component {
     render() {
         const { isCompleted, id, index, name, handleCheckBox, editMode } = this.props;
         return (
+            //fix-------------------------------
             <div style={{ height: 50, display: 'flex', justifyContent: 'center' }} className='todo-container'>
                 <input type="checkbox" onChange={() => handleCheckBox(id)} checked={isCompleted} />
                 <div className={isCompleted ? "completed" : ''}>
                     <div
+                        //fix---------------------------------
                         style={{ textAlign: 'left', marginLeft: 50 }}
                         className='todoDisplay' onDoubleClick={this.handleEditing}>
                         {index}. {name}
                     </div>
                 </div>
                 <button
+                //-fixxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                     style={{ marginLeft: 100 }}
                     onClick={this.handleRemoveTodo}>delelte</button>
                 <button onClick={() => editMode(name, id)}>Edit</button>
