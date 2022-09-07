@@ -1,13 +1,13 @@
 import React from 'react';
-import {Theme}   from './theme';
+import { Theme } from './theme';
 class ThemeButton extends React.Component {
 
     render() {
-        return(
+        return (
             <>
-                <Theme.Consumer> 
-                    {({theme, toggleTheme}) => (
-                        <button onClick={toggleTheme} style={{backgroundColor: theme.backgroundColor, color: theme.color}}>
+                <Theme.Consumer>
+                    {({ theme, toggleTheme }) => (
+                        <button onClick={toggleTheme} style={{ backgroundColor: theme.backgroundColor, color: theme.color }}>
                             Change theme
                         </button>
                     )}

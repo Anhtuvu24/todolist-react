@@ -6,7 +6,7 @@ function paginationSub(WrappedComponent) {
             super()
             this.state = {
                 limitTodo: 3,
-                isLoading: false,       
+                isLoading: false,
             }
         }
         onScroll = () => {
@@ -23,11 +23,11 @@ function paginationSub(WrappedComponent) {
         render() {
             const { isLoading, limitTodo } = this.state;
             return (
-                <WrappedComponent 
-                    isLoading={isLoading} 
-                    limitTodo={limitTodo} 
-                    onScroll={this.onScroll} 
-                    {...this.props} 
+                <WrappedComponent
+                    isLoading={isLoading}
+                    limitTodo={limitTodo}
+                    onScroll={this.onScroll}
+                    {...this.props}
                 />
             )
         }

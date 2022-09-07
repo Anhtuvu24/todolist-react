@@ -1,10 +1,9 @@
 import React from 'react';
 //import ReactDOM from 'react-dom';
-import Todo from './Todo';
 import Header from './Header';
 import { nanoid } from 'nanoid';
 import Footer from './Footer';
-import {themes, Theme} from './theme';
+import { Theme } from './theme';
 import ThemeButton from './ThemeButton';
 import TodoListItemHOC from './TodoListItem'
 import '../CSS/TodoList.css'
@@ -70,7 +69,6 @@ class TodoList extends React.Component {
             statusList: "All",
             keySearch: '',
             numberPage: 1,
-            limitTodo: 3,
             isLoading: false,
         };
         this.headerRef = React.createRef();
@@ -79,7 +77,7 @@ class TodoList extends React.Component {
     addTodo = (name) => {
         // this.setState({list: [...this.state.list, {name: name, isCompleted: false, id: nanoid()}]});
         this.setState((state) => ({
-            list: [...state.list, {name: name, isCompleted: false, id: nanoid()}]
+            list: [...state.list, { name: name, isCompleted: false, id: nanoid() }]
         }))
     };
 
@@ -99,11 +97,11 @@ class TodoList extends React.Component {
     handleCheckBox = (check) => {
         const { list } = this.state;
         list.map((todo) => {
-            if(todo.id === check) {
+            if (todo.id === check) {
                 todo.isCompleted = !todo.isCompleted;
             }
         })
-        this.setState({list});
+        this.setState({ list });
     };
 
     isCheckAll = () => {
@@ -113,22 +111,15 @@ class TodoList extends React.Component {
 
     checkedALL = () => {
         const { list } = this.state;
-        if(this.isCheckAll()) {
-            list.map((todo) => {
-                todo.isCompleted = false;
-            })
-        }
-        else {
-            list.map((todo) => {
-                todo.isCompleted = true;
-            })
-        }
-        this.setState({list});    
+        const flag = !this.isCheckAll();
+        list.map((todo) => {
+            todo.isCompleted = flag;
+        })
+        this.setState({ list });
     };
 
     displayList = (statusList) => {
-        this.setState({statusList})
-        console.log(this.state.statusList)
+        this.setState({ statusList });
     };
 
     editMode = (name, id) => {
@@ -139,42 +130,41 @@ class TodoList extends React.Component {
     editTodo = (name, id) => {
         const { list } = this.state;
         list.map(todo => {
-            if(todo.id === id) {
-                console.log(todo.id);
+            if (todo.id === id) {
                 todo.name = name;
             }
         })
-        this.setState({list});
+        this.setState({ list });
     }
 
     setKeySearch = (keySearch) => {
-        this.setState({keySearch});
+        this.setState({ keySearch });
     };
 
     getPage = (numberPage) => {
-        this.setState({numberPage});
+        this.setState({ numberPage });
     }
 
     handleSetTheme = (theme) => {
-        this.setState({theme});
+        this.setState({ theme });
     }
 
     render() {
         const { list, statusList, keySearch } = this.state;
-        return(
+        return (
             <>
                 <Theme.Consumer>
-                    {({theme, toggleTheme}) => (
-                        <div style={{backgroundColor: theme.backgroundColor, color: theme.color}} className = "list-container">
-                            <Header 
-                                addTodo={this.addTodo} 
-                                setKeySearch={this.setKeySearch} 
+                    {({ theme, toggleTheme }) => (
+                        <div style={{ backgroundColor: theme.backgroundColor, color: theme.color }} className="list-container">
+                            <Header
+                                addTodo={this.addTodo}
+                                setKeySearch={this.setKeySearch}
                                 displayList={this.displayList}
                                 ref={this.headerRef}
                                 editTodo={this.editTodo}
                             />
-                            
-                            <TodoListItemHOC 
+
+                            <TodoListItemHOC
                                 list={list}
                                 statusList={statusList}
                                 keySearch={keySearch}
@@ -186,15 +176,15 @@ class TodoList extends React.Component {
                             {/* <Page getPage = {this.getPage} longList = {Math.ceil(list.length / 3)}/>        */}
                             <div className='Container-footer'>
                                 <b><i>{list.length}</i> items</b>
-                                <button onClick={this.checkedALL}>{this.isCheckAll() ? 'unCompleteALL' :  'completedAll'}</button>
-                                <Footer displayList={this.displayList}/>
+                                <button onClick={this.checkedALL}>{this.isCheckAll() ? 'unCompleteALL' : 'completedAll'}</button>
+                                <Footer displayList={this.displayList} />
                             </div>
                         </div>
                     )}
                 </Theme.Consumer>
                 <ThemeButton />
             </>
-        ); 
+        );
     }
 }
 

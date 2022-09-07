@@ -12,10 +12,10 @@ class TodoListItem extends React.Component {
         return (dom.scrollHeight - dom.clientHeight) - dom.scrollTop;
     };
 
-    onScrollBot  = () => {
+    onScrollBot = () => {
         const { onScroll, limitTodo, list } = this.props;
         const bot = this.scrollBottomDom(this.scrollRef);
-        if(bot < 3 && (limitTodo < list.length)) {
+        if (bot < 3 && (limitTodo < list.length)) {
             onScroll();
         }
     }
@@ -27,30 +27,29 @@ class TodoListItem extends React.Component {
     }
 
     render() {
-        const {list, removeTodo, setUpdate, handleCheckBox, isLoading, limitTodo, statusList, keySearch, editMode} = this.props;
-        return(
-            <div onScroll={this.onScrollBot} ref={this.setScrollRef} style={{marginTop: 20,  overflowY: "scroll", height: 200 }}>
+        const { list, removeTodo, setUpdate, handleCheckBox, isLoading, limitTodo, statusList, keySearch, editMode } = this.props;
+        return (
+            <div onScroll={this.onScrollBot} ref={this.setScrollRef} style={{ marginTop: 20, overflowY: "scroll", height: 200 }}>
                 {list.map((todo, index) => {
                     let flag = false;
-                    if(
+                    if (
                         (
-                            (todo.isCompleted && statusList === 'Complete') || 
-                            (!todo.isCompleted && statusList === 'Active') || 
+                            (todo.isCompleted && statusList === 'Complete') ||
+                            (!todo.isCompleted && statusList === 'Active') ||
                             statusList === 'All'
-                        ) && 
+                        ) &&
                         (keySearch ? todo.name.includes(keySearch) : true) &&
-                        (index < limitTodo)) 
-                    {
+                        (index < limitTodo)) {
                         flag = true;
                         return flag && (
                             <Todo
-                                name={todo.name} 
+                                name={todo.name}
                                 isCompleted={todo.isCompleted}
                                 index={index}
-                                removeTodo={removeTodo} 
+                                removeTodo={removeTodo}
                                 handleCheckBox={handleCheckBox}
                                 id={todo.id}
-                                setUpdate = {setUpdate}
+                                setUpdate={setUpdate}
                                 key={todo.id}
                                 editMode={editMode}
                             />
@@ -65,6 +64,6 @@ class TodoListItem extends React.Component {
     }
 }
 
-const TodoListItemHOC =  paginationSub(TodoListItem);
+const TodoListItemHOC = paginationSub(TodoListItem);
 
 export default TodoListItemHOC;

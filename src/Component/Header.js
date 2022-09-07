@@ -14,33 +14,33 @@ class Header extends React.Component {
     };
 
     handleAddTodo = (id) => {
-        const {valueInput, statusInput} = this.state;
+        const { valueInput, statusInput } = this.state;
         const { addTodo, editTodo } = this.props;
-        if(valueInput !== '' && statusInput === 'Add') {
+        if (valueInput !== '' && statusInput === 'Add') {
             addTodo(valueInput);
-            this.setState({valueInput: ''})
+            this.setState({ valueInput: '' })
         }
-        else if(valueInput !== '' && statusInput === 'Edit') {
+        else if (valueInput !== '' && statusInput === 'Edit') {
             editTodo(valueInput, id);
-            this.setState({valueInput: ''})
-            this.setState({statusInput: 'Add'})
+            this.setState({ valueInput: '' })
+            this.setState({ statusInput: 'Add' })
         }
     };
 
     handleKeyPress = (e) => {
         const { addTodo, editTodo } = this.props;
-        const {valueInput, statusInput, editID} = this.state;
-        if(statusInput === 'Add' && valueInput !== '' && e.key === 'Enter') {
+        const { valueInput, statusInput, editID } = this.state;
+        if (statusInput === 'Add' && valueInput !== '' && e.key === 'Enter') {
             addTodo(valueInput);
-            this.setState({valueInput: ''})
+            this.setState({ valueInput: '' })
         }
-        else if(statusInput === 'Edit' && valueInput !== '' && e.key === 'Enter') {
+        else if (statusInput === 'Edit' && valueInput !== '' && e.key === 'Enter') {
             editTodo(valueInput, editID);
-            this.setState({valueInput: ''})
-            this.setState({statusInput: 'Add'})
+            this.setState({ valueInput: '' })
+            this.setState({ statusInput: 'Add' })
         }
     };
-//------------------------------Search------------------------------
+    //------------------------------Search------------------------------
     // handleSearchKeyPress = (e) => { //
     //     if(e.key === 'Enter') {
     //         this.handleSearch();
@@ -49,34 +49,34 @@ class Header extends React.Component {
 
     onFocusInput = (name, id) => {
         this.refInput.current.focus();
-        this.setState({valueInput: name, statusInput: 'Edit', editID: id});
+        this.setState({ valueInput: name, statusInput: 'Edit', editID: id });
         //console.log(this.refInput) // -> input
     }
 
     handleSearch = () => {
-        const {valueInput} = this.state;
+        const { valueInput } = this.state;
         this.props.setKeySearch(valueInput);
-    } 
+    }
 
     handleChange = (e) => {
-        this.setState({valueInput: e.target.value});
+        this.setState({ valueInput: e.target.value });
     };
 
     render() {
-        const {valueInput, statusInput, editID} = this.state;
-        return(
+        const { valueInput, statusInput, editID } = this.state;
+        return (
             <div className='Container-header'>
                 <h1>TODO LIST</h1>
-                <input 
-                    ref={this.refInput} 
-                    type = "text" 
-                    placeholder = "What do you want to do?" 
-                    value = {valueInput} 
-                    onKeyDown = {this.handleKeyPress}  
+                <input
+                    ref={this.refInput}
+                    type="text"
+                    placeholder="What do you want to do?"
+                    value={valueInput}
+                    onKeyDown={this.handleKeyPress}
                     onChange={this.handleChange}
                 />
-                <button value='add' type = "submit" onClick={() => this.handleAddTodo(editID)}>{statusInput}</button>
-                <button value='search' type = "submit" onClick={this.handleSearch}>Search</button>
+                <button value='add' type="submit" onClick={() => this.handleAddTodo(editID)}>{statusInput}</button>
+                <button value='search' type="submit" onClick={this.handleSearch}>Search</button>
             </div>
         )
     }
