@@ -1,5 +1,5 @@
 import React from 'react';
-export const themes =  {
+export const themes = {
     light: {
         color: 'black',
         backgroundColor: 'white',
@@ -8,9 +8,9 @@ export const themes =  {
         color: 'white',
         backgroundColor: 'black',
     }
-    
+
 }
 export const Theme = React.createContext({
     theme: themes.light,
-    toggleTheme: () => {},
+    toggleTheme: () => { },
 });

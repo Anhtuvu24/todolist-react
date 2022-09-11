@@ -3,28 +3,31 @@ import '../CSS/Todo.css';
 
 //import ReactDOM from 'react-dom';
 
-class Todo extends React.Component {
-    
-    handleRemoveTodo = () => {
-        this.props.removeTodo(this.props.index);
-        
-    };
+function Todo(props) {
 
-    render() {
-        const {isCompleted, id, index, name, handleCheckBox, editMode} = this.props;
-        return(
-            <div style={{height: 50, display: 'flex', justifyContent: 'center'}} className='todo-container'>
-                <input type = "checkbox" onChange={() => handleCheckBox(id)} checked = {isCompleted}/>
-                <div className = {isCompleted ? "completed" : ''}>
-                    <div style={{textAlign: 'left', marginLeft: 50}} className='todoDisplay' onDoubleClick={this.handleEditing}>
+    const handleRemoveTodo = () => {
+        props.removeTodo(props.index);
+    };
+        const { isCompleted, id, index, name, handleCheckBox, editMode } = props;
+        return (
+            //fix-------------------------------
+            <div style={{ height: 50, display: 'flex', justifyContent: 'center' }} className='todo-container'>
+                <input type="checkbox" onChange={() => handleCheckBox(id)} checked={isCompleted} />
+                <div className={isCompleted ? "completed" : ''}>
+                    <div
+                        //fix---------------------------------
+                        style={{ textAlign: 'left', marginLeft: 50 }}
+                        className='todoDisplay'>
                         {index}. {name}
                     </div>
                 </div>
-                <button style={{marginLeft: 100}} onClick={this.handleRemoveTodo}>delelte</button>
+                <button
+                //-fixxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    style={{ marginLeft: 100 }}
+                    onClick={handleRemoveTodo}>delelte</button>
                 <button onClick={() => editMode(name, id)}>Edit</button>
             </div>
         )
-    }
 }
 
 export default Todo;

@@ -1,80 +1,77 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 //import ReactDOM from 'react-dom';
 import '../CSS/Header.css'
 
-class Header extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            valueInput: '',
-            statusInput: 'Add',
-            editID: '',
-        }
-        this.refInput = React.createRef();
-    };
+function Header(props) {
+    const [valueInput, setValueInput] = useState('');
+    const [statusInput, setStatusInput] = useState('Add');
+    const [editID, setEditID] = useState('');
+    const refInput = React.createRef();
 
-    handleAddTodo = (id) => {
-        const {valueInput, statusInput} = this.state;
-        const { addTodo, editTodo } = this.props;
-        if(valueInput !== '' && statusInput === 'Add') {
+    const handleAddTodo = (id) => {
+        const { addTodo, editTodo } = props;
+        if (valueInput !== '' && statusInput === 'Add') {
             addTodo(valueInput);
-            this.setState({valueInput: ''})
+            setValueInput('');
         }
-        else if(valueInput !== '' && statusInput === 'Edit') {
+        else if (valueInput !== '' && statusInput === 'Edit') {
             editTodo(valueInput, id);
-            this.setState({valueInput: ''})
-            this.setState({statusInput: 'Add'})
+            setValueInput('');
+            setStatusInput('Add');
         }
     };
 
-    handleKeyPress = (e) => {
-        const { addTodo } = this.props;
-        const {valueInput, statusInput} = this.state;
-        if(statusInput === 'Add' && valueInput !== '' && e.key === 'Enter') {
+    const handleKeyPress = (e) => {
+        const { addTodo, editTodo } = props;
+        const { valueInput, statusInput, editID } = this.state;
+        if (statusInput === 'Add' && valueInput !== '' && e.key === 'Enter') {
             addTodo(valueInput);
-            this.setState({valueInput: ''})
+            setValueInput('')
+        }
+        else if (statusInput === 'Edit' && valueInput !== '' && e.key === 'Enter') {
+            editTodo(valueInput, editID);
+            setValueInput('');
+            setStatusInput('Add');
         }
     };
-//------------------------------Search------------------------------
+    //------------------------------Search------------------------------
     // handleSearchKeyPress = (e) => { //
     //     if(e.key === 'Enter') {
     //         this.handleSearch();
     //     }
     // };
 
-    onFocusInput = (name, id) => {
+    const onFocusInput = (name, id) => {
         this.refInput.current.focus();
-        this.setState({valueInput: name, statusInput: 'Edit', editID: id});
+        setValueInput(name);
+        setStatusInput('Edit');
+        setEditID(id);
         //console.log(this.refInput) // -> input
     }
 
-    handleSearch = () => {
-        const {valueInput} = this.state;
-        this.props.setKeySearch(valueInput);
-    } 
-
-    handleChange = (e) => {
-        this.setState({valueInput: e.target.value});
-    };
-
-    render() {
-        const {valueInput, statusInput, editID} = this.state;
-        return(
-            <div className='Container-header'>
-                <h1>TODO LIST</h1>
-                <input 
-                    ref={this.refInput} 
-                    type = "text" 
-                    placeholder = "What do you want to do?" 
-                    value = {valueInput} 
-                    onKeyDown = {this.handleKeyPress}  
-                    onChange={this.handleChange}
-                />
-                <button value='add' type = "submit" onClick={() => this.handleAddTodo(editID)}>{statusInput}</button>
-                <button value='search' type = "submit" onClick={this.handleSearch}>Search</button>
-            </div>
-        )
+    const handleSearch = () => {
+        const { valueInput } = this.state;
+        props.setKeySearch(valueInput);
     }
+
+    const handleChange = (e) => {
+        setValueInput(e.target.value);
+    };
+    return (
+        <div className='Container-header'>
+            <h1>TODO LIST</h1>
+            <input
+                ref={refInput}
+                type="text"
+                placeholder="What do you want to do?"
+                value={valueInput}
+                onKeyDown={handleKeyPress}
+                onChange={handleChange}
+            />
+            <button value='add' type="submit" onClick={() => handleAddTodo(editID)}>{statusInput}</button>
+            <button value='search' type="submit" onClick={handleSearch}>Search</button>
+        </div>
+    )
 }
 
 export default Header;
