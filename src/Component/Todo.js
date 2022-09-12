@@ -3,15 +3,12 @@ import '../CSS/Todo.css';
 
 //import ReactDOM from 'react-dom';
 
-class Todo extends React.Component {
+function Todo(props) {
 
-    handleRemoveTodo = () => {
-        this.props.removeTodo(this.props.index);
-
+    const handleRemoveTodo = () => {
+        props.removeTodo(props.index);
     };
-
-    render() {
-        const { isCompleted, id, index, name, handleCheckBox, editMode } = this.props;
+        const { isCompleted, id, index, name, handleCheckBox, editMode } = props;
         return (
             //fix-------------------------------
             <div style={{ height: 50, display: 'flex', justifyContent: 'center' }} className='todo-container'>
@@ -20,18 +17,17 @@ class Todo extends React.Component {
                     <div
                         //fix---------------------------------
                         style={{ textAlign: 'left', marginLeft: 50 }}
-                        className='todoDisplay' onDoubleClick={this.handleEditing}>
+                        className='todoDisplay'>
                         {index}. {name}
                     </div>
                 </div>
                 <button
                 //-fixxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                     style={{ marginLeft: 100 }}
-                    onClick={this.handleRemoveTodo}>delelte</button>
+                    onClick={handleRemoveTodo}>delelte</button>
                 <button onClick={() => editMode(name, id)}>Edit</button>
             </div>
         )
-    }
 }
 
 export default Todo;
