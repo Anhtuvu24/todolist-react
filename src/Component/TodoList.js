@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 //import ReactDOM from 'react-dom';
 import Header from './Header';
 import { nanoid } from 'nanoid';
@@ -65,8 +65,6 @@ function TodoList() {
     ]);
     const [statusList, setStatusList] = useState('All');
     const [keySearch, _setKeySearch] = useState('');
-    const [numberPage, setNumberPage] = useState(1);
-    const [isLoading, setIsLoading] = useState(false);
     const headerRef = useRef(null);
     const theme = useContext(Theme);
 
@@ -76,11 +74,12 @@ function TodoList() {
     };
 
     const removeTodo = (index) => {
-        // const { list }=this.state;
-        // list.splice(index, 1);
-        // this.setState({list});
-        console.log(list.splice(index, 1));
-        setList(list.splice(index, 1));
+        let new_List = list;
+        debugger;
+        new_List.splice(index, 1);
+        console.log(new_List);
+        debugger;
+        setList([...new_List]);
     };
 
 
@@ -89,6 +88,7 @@ function TodoList() {
             if (todo.id === check) {
                 todo.isCompleted = !todo.isCompleted;
             }
+            return todo;
         })
         setList(_list);
     };
@@ -111,9 +111,7 @@ function TodoList() {
     };
 
     const editMode = (name, id) => {
-        console.log(headerRef.current);
         headerRef.current.onFocusInput(name, id);
-        console.log(headerRef.current);
     };
 
     const editTodo = (name, id) => {
@@ -121,6 +119,7 @@ function TodoList() {
             if (todo.id === id) {
                 todo.name = name;
             }
+            return todo;
         })
         setList(_list);
     };
@@ -128,7 +127,7 @@ function TodoList() {
     const setKeySearch = (keySearch) => {
         _setKeySearch(keySearch);
     };
-
+    console.log(11111, list);
     return (
     <>
             {/* fix------------------------------------- */}
@@ -137,7 +136,7 @@ function TodoList() {
                     addTodo={addTodo}
                     setKeySearch={setKeySearch}
                     displayList={displayList}
-                    ref={headerRef}
+                    refFocus={headerRef}
                     editTodo={editTodo}
                 />
 
@@ -149,7 +148,6 @@ function TodoList() {
                     handleCheckBox={handleCheckBox}
                     editMode={editMode}
                 />
-                {/* <Page getPage = {getPage} longList = {Math.ceil(list.length / 3)}/>        */}
                 <div className='Container-footer'>
                     <b><i>{list.length}</i> items</b>
                     <button onClick={checkedALL}>{isCheckAll() ? 'unCompleteALL' : 'completedAll'}</button>

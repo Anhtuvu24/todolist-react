@@ -23,7 +23,6 @@ function Header(props) {
 
     const handleKeyPress = (e) => {
         const { addTodo, editTodo } = props;
-        const { valueInput, statusInput, editID } = this.state;
         if (statusInput === 'Add' && valueInput !== '' && e.key === 'Enter') {
             addTodo(valueInput);
             setValueInput('')
@@ -34,19 +33,13 @@ function Header(props) {
             setStatusInput('Add');
         }
     };
-    //------------------------------Search------------------------------
-    // handleSearchKeyPress = (e) => { //
-    //     if(e.key === 'Enter') {
-    //         this.handleSearch();
-    //     }
-    // };
 
     const onFocusInput = (name, id) => {
+        debugger;
         refInput.current.focus();
         setValueInput(name);
         setStatusInput('Edit');
         setEditID(id);
-        //console.log(this.refInput) // -> input
     }
 
     const handleSearch = () => {
@@ -56,6 +49,15 @@ function Header(props) {
     const handleChange = (e) => {
         setValueInput(e.target.value);
     };
+
+    React.useEffect(() => {
+        const {refFocus} = props;
+        refFocus.current = {
+            onFocusInput,
+        };
+    }, []);
+
+
     return (
         <div className='Container-header'>
             <h1>TODO LIST</h1>

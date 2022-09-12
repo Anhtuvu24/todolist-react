@@ -1,6 +1,7 @@
 import React, {useRef} from 'react';
 import Todo from './Todo';
 import paginationSub from './pagination-hoc';
+import '../CSS/scrollBot.css'
 
 function TodoListItem(props) {
     let scrollRef = useRef();
@@ -21,9 +22,9 @@ function TodoListItem(props) {
     };
 
     const { list, removeTodo,handleCheckBox, isLoading, limitTodo, statusList, keySearch, editMode } = props;
-    
+
     return (
-        <div onScroll={onScrollBot} ref={setScrollRef} style={{ marginTop: 20, overflowY: "scroll", height: 200 }}>
+        <div className='scrollBot' onScroll={onScrollBot} ref={setScrollRef} style={{ overflowY: "scroll" }}>
             {list.map((todo, index) => {
                 let flag = false;
                 if (
