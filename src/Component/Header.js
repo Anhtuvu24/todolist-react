@@ -6,7 +6,7 @@ function Header(props) {
     const [valueInput, setValueInput] = useState('');
     const [statusInput, setStatusInput] = useState('Add');
     const [editID, setEditID] = useState('');
-    const refInput = React.createRef();
+    const refInput = useRef(null);
 
     const handleAddTodo = (id) => {
         const { addTodo, editTodo } = props;
@@ -42,7 +42,7 @@ function Header(props) {
     // };
 
     const onFocusInput = (name, id) => {
-        this.refInput.current.focus();
+        refInput.current.focus();
         setValueInput(name);
         setStatusInput('Edit');
         setEditID(id);
@@ -50,7 +50,6 @@ function Header(props) {
     }
 
     const handleSearch = () => {
-        const { valueInput } = this.state;
         props.setKeySearch(valueInput);
     }
 

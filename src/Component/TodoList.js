@@ -67,7 +67,8 @@ function TodoList() {
     const [keySearch, _setKeySearch] = useState('');
     const [numberPage, setNumberPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
-    const headerRef = React.createRef();
+    const headerRef = useRef(null);
+    const theme = useContext(Theme);
 
     const addTodo = (name) => {
         // this.setState({list: [...this.state.list, {name: name, isCompleted: false, id: nanoid()}]});
@@ -78,6 +79,7 @@ function TodoList() {
         // const { list }=this.state;
         // list.splice(index, 1);
         // this.setState({list});
+        console.log(list.splice(index, 1));
         setList(list.splice(index, 1));
     };
 
@@ -96,10 +98,11 @@ function TodoList() {
     };
 
     const checkedALL = () => {
-        const flag = !this.isCheckAll();
-        const _list = list.map((todo) => {
+        const flag = !isCheckAll();
+        const _list = list.map(function(todo){
             todo.isCompleted = flag;
-        })
+            return todo; 
+        });
         setList(_list);
     };
 
@@ -108,8 +111,9 @@ function TodoList() {
     };
 
     const editMode = (name, id) => {
-        this.headerRef.current.onFocusInput(name, id);
-        //console.log(this.headerRef.current);
+        console.log(headerRef.current);
+        headerRef.current.onFocusInput(name, id);
+        console.log(headerRef.current);
     };
 
     const editTodo = (name, id) => {
@@ -126,38 +130,34 @@ function TodoList() {
     };
 
     return (
-        <>
-            <Theme.Consumer>
-                {({ theme, toggleTheme }) => (
-                    //fix-------------------------------------
-                    <div style={{ backgroundColor: theme.backgroundColor, color: theme.color }} className="list-container">
-                        <Header
-                            addTodo={addTodo}
-                            setKeySearch={setKeySearch}
-                            displayList={displayList}
-                            ref={headerRef}
-                            editTodo={editTodo}
-                        />
+    <>
+            {/* fix------------------------------------- */}
+            <div style={{ backgroundColor: theme.theme.backgroundColor, color: theme.theme.color }} className="list-container">
+                <Header
+                    addTodo={addTodo}
+                    setKeySearch={setKeySearch}
+                    displayList={displayList}
+                    ref={headerRef}
+                    editTodo={editTodo}
+                />
 
-                        <TodoListItemHOC
-                            list={list}
-                            statusList={statusList}
-                            keySearch={keySearch}
-                            removeTodo={removeTodo}
-                            handleCheckBox={handleCheckBox}
-                            editMode={editMode}
-                        />
-                        {/* <Page getPage = {getPage} longList = {Math.ceil(list.length / 3)}/>        */}
-                        <div className='Container-footer'>
-                            <b><i>{list.length}</i> items</b>
-                            <button onClick={checkedALL}>{isCheckAll() ? 'unCompleteALL' : 'completedAll'}</button>
-                            <Footer displayList={displayList} />
-                        </div>
-                    </div>
-                )}
-            </Theme.Consumer>
-            <ThemeButton />
-        </>
+                <TodoListItemHOC
+                    list={list}
+                    statusList={statusList}
+                    keySearch={keySearch}
+                    removeTodo={removeTodo}
+                    handleCheckBox={handleCheckBox}
+                    editMode={editMode}
+                />
+                {/* <Page getPage = {getPage} longList = {Math.ceil(list.length / 3)}/>        */}
+                <div className='Container-footer'>
+                    <b><i>{list.length}</i> items</b>
+                    <button onClick={checkedALL}>{isCheckAll() ? 'unCompleteALL' : 'completedAll'}</button>
+                    <Footer displayList={displayList} />
+                </div>
+            </div>
+        <ThemeButton />
+    </>
     );
 }
 

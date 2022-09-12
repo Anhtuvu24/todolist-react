@@ -1,15 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Theme } from './theme';
 function ThemeButton() {
+    const theme = useContext(Theme);
     return (
         <>
-            <Theme.Consumer>
-                {({ theme, toggleTheme }) => (
-                    <button onClick={toggleTheme} style={{ backgroundColor: theme.backgroundColor, color: theme.color }}>
-                        Change theme
-                    </button>
-                )}
-            </Theme.Consumer>
+            <button onClick={theme.toggleTheme} style={{ backgroundColor: theme.theme.backgroundColor, color: theme.theme.color }}>
+                Change theme
+            </button>
         </>
     )
 }

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import Todo from './Todo';
 import paginationSub from './pagination-hoc';
 
 function TodoListItem(props) {
-    const scrollRef = React.createRef();
+    let scrollRef = useRef();
     const scrollBottomDom = (dom) => {
         return (dom.scrollHeight - dom.clientHeight) - dom.scrollTop;
     };
@@ -17,7 +17,7 @@ function TodoListItem(props) {
     };
 
     const setScrollRef = (e) => {
-        this.scrollRef = e;
+        scrollRef = e;
     };
 
     const { list, removeTodo,handleCheckBox, isLoading, limitTodo, statusList, keySearch, editMode } = props;
