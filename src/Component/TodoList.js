@@ -13,7 +13,7 @@ function TodoList() {
     const [list, setList] = useState([
         {
             name: 'todo1',
-            id: 0,
+            id: 10,
             isCompleted: false,
         },
 

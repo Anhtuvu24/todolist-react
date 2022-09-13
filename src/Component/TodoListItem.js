@@ -23,7 +23,7 @@ function TodoListItem(props) {
     };
 
     return (
-        <div className='scrollBot' onScroll={onScrollBot} ref={setScrollRef} style={{ overflowY: "scroll" }}>
+        <div className='scrollBot' onScroll={onScrollBot} ref={setScrollRef}>
             {list.map((todo, index) => {
                 if (
                     (

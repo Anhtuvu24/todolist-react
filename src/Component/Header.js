@@ -7,35 +7,39 @@ function Header(props) {
     const [editID, setEditID] = useState('');
     const refInput = useRef(null);
     const { addTodo, editTodo, setKeySearch, refFocus } = props;
-    
+
     const handleAddTodo = (id) => {
-        if (valueInput !== '' && statusInput === 'Add') {
+        if (valueInput !== '' && !editID) {
             addTodo(valueInput);
             setValueInput('');
         }
-        else if (valueInput !== '' && statusInput === 'Edit') {
+        else if (valueInput !== '' && editID) {
             editTodo(valueInput, id);
             setValueInput('');
-            setStatusInput('Add');
+            // setStatusInput('Add');
+            setEditID(null);
         }
     };
 
     const handleKeyPress = (e) => {
-        if (statusInput === 'Add' && valueInput !== '' && e.key === 'Enter') {
+        if (!editID && valueInput !== '' && e.key === 'Enter') {
             addTodo(valueInput);
             setValueInput('')
         }
-        else if (statusInput === 'Edit' && valueInput !== '' && e.key === 'Enter') {
+        else if (editID && valueInput !== '' && e.key === 'Enter') {
             editTodo(valueInput, editID);
             setValueInput('');
-            setStatusInput('Add');
+            // setStatusInput('Add');
+            setEditID(null);
+
         }
     };
 
     const onFocusInput = (name, id) => {
         refInput.current.focus();
         setValueInput(name);
-        setStatusInput('Edit');
+        // setStatusInput('Edit');
+        debugger;
         setEditID(id);
     };
 
@@ -65,7 +69,7 @@ function Header(props) {
                 onKeyDown={handleKeyPress}
                 onChange={handleChange}
             />
-            <button value='add' type="submit" onClick={() => handleAddTodo(editID)}>{statusInput}</button>
+            <button value='add' type="submit" onClick={() => handleAddTodo(editID)}>{editID ? 'Edit' : 'Add'}</button>
             <button value='search' type="submit" onClick={handleSearch}>Search</button>
         </div>
     )
