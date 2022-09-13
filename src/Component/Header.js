@@ -3,7 +3,6 @@ import '../CSS/Header.css';
 
 function Header(props) {
     const [valueInput, setValueInput] = useState('');
-    const [statusInput, setStatusInput] = useState('Add');
     const [editID, setEditID] = useState('');
     const refInput = useRef(null);
     const { addTodo, editTodo, setKeySearch, refFocus } = props;
