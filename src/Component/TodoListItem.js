@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, { useRef } from 'react';
 import Todo from './Todo';
 import paginationSub from './pagination-hoc';
 import '../CSS/scrollBot.css'
@@ -21,12 +21,11 @@ function TodoListItem(props) {
         scrollRef = e;
     };
 
-    const { list, removeTodo,handleCheckBox, isLoading, limitTodo, statusList, keySearch, editMode } = props;
+    const { list, removeTodo, handleCheckBox, isLoading, limitTodo, statusList, keySearch, editMode } = props;
 
     return (
         <div className='scrollBot' onScroll={onScrollBot} ref={setScrollRef} style={{ overflowY: "scroll" }}>
             {list.map((todo, index) => {
-                let flag = false;
                 if (
                     (
                         (todo.isCompleted && statusList === 'Complete') ||
@@ -35,8 +34,7 @@ function TodoListItem(props) {
                     ) &&
                     (keySearch ? todo.name.includes(keySearch) : true) &&
                     (index < limitTodo)) {
-                    flag = true;
-                    return flag && (
+                    return (
                         <Todo
                             name={todo.name}
                             isCompleted={todo.isCompleted}

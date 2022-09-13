@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext, useEffect } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 //import ReactDOM from 'react-dom';
 import Header from './Header';
 import { nanoid } from 'nanoid';
@@ -75,10 +75,7 @@ function TodoList() {
 
     const removeTodo = (index) => {
         let new_List = list;
-        debugger;
         new_List.splice(index, 1);
-        console.log(new_List);
-        debugger;
         setList([...new_List]);
     };
 
@@ -99,9 +96,9 @@ function TodoList() {
 
     const checkedALL = () => {
         const flag = !isCheckAll();
-        const _list = list.map(function(todo){
+        const _list = list.map(function (todo) {
             todo.isCompleted = flag;
-            return todo; 
+            return todo;
         });
         setList(_list);
     };
@@ -127,14 +124,14 @@ function TodoList() {
     const setKeySearch = (keySearch) => {
         _setKeySearch(keySearch);
     };
-    console.log(11111, list);
+
     return (
-    <>
+        <>
             {/* fix------------------------------------- */}
             <div style={{ backgroundColor: theme.theme.backgroundColor, color: theme.theme.color }} className="list-container">
                 <Header
                     addTodo={addTodo}
-                    setKeySearch={setKeySearch}
+                    setKeySearch={_setKeySearch}
                     displayList={displayList}
                     refFocus={headerRef}
                     editTodo={editTodo}
@@ -154,8 +151,8 @@ function TodoList() {
                     <Footer displayList={displayList} />
                 </div>
             </div>
-        <ThemeButton />
-    </>
+            <ThemeButton />
+        </>
     );
 }
 

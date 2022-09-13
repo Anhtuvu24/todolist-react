@@ -35,7 +35,6 @@ function Header(props) {
     };
 
     const onFocusInput = (name, id) => {
-        debugger;
         refInput.current.focus();
         setValueInput(name);
         setStatusInput('Edit');
@@ -51,7 +50,7 @@ function Header(props) {
     };
 
     React.useEffect(() => {
-        const {refFocus} = props;
+        const { refFocus } = props;
         refFocus.current = {
             onFocusInput,
         };
