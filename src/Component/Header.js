@@ -6,9 +6,9 @@ function Header(props) {
     const [statusInput, setStatusInput] = useState('Add');
     const [editID, setEditID] = useState('');
     const refInput = useRef(null);
-
+    const { addTodo, editTodo, setKeySearch, refFocus } = props;
+    
     const handleAddTodo = (id) => {
-        const { addTodo, editTodo } = props;
         if (valueInput !== '' && statusInput === 'Add') {
             addTodo(valueInput);
             setValueInput('');
@@ -21,7 +21,6 @@ function Header(props) {
     };
 
     const handleKeyPress = (e) => {
-        const { addTodo, editTodo } = props;
         if (statusInput === 'Add' && valueInput !== '' && e.key === 'Enter') {
             addTodo(valueInput);
             setValueInput('')
@@ -41,7 +40,7 @@ function Header(props) {
     };
 
     const handleSearch = () => {
-        props.setKeySearch(valueInput);
+        setKeySearch(valueInput);
     };
 
     const handleChange = (e) => {
@@ -49,7 +48,6 @@ function Header(props) {
     };
 
     React.useEffect(() => {
-        const { refFocus } = props;
         refFocus.current = {
             onFocusInput,
         };

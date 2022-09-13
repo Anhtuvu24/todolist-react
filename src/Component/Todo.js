@@ -2,11 +2,11 @@ import React from 'react';
 import '../CSS/Todo.css';
 
 function Todo(props) {
+    const { isCompleted, id, index, name, handleCheckBox, editMode, removeTodo } = props;
 
     const handleRemoveTodo = () => {
-        props.removeTodo(props.index);
+        removeTodo(props.index);
     };
-    const { isCompleted, id, index, name, handleCheckBox, editMode } = props;
     return (
         <div className='todo-container'>
             <input type="checkbox" onChange={() => handleCheckBox(id)} checked={isCompleted} />
