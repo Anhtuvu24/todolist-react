@@ -12,6 +12,6 @@ function ThemeProvider() {
             <TodoList />
         </Theme.Provider>
     )
-}
+};
 
 export default ThemeProvider;

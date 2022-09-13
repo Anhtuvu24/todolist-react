@@ -154,6 +154,6 @@ function TodoList() {
             <ThemeButton />
         </>
     );
-}
+};
 
 export default TodoList

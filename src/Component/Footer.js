@@ -1,5 +1,5 @@
 import React from 'react';
-import '../CSS/Footer.css'
+import '../CSS/Footer.css';
 function Footer(props) {
     const { displayList } = props;
     return (
@@ -12,6 +12,6 @@ function Footer(props) {
 
         </>
     )
-}
+};
 
 export default Footer

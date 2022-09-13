@@ -32,6 +32,6 @@ function paginationSub(WrappedComponent) {
             )
         }
     }
-}
+};
 
 export default paginationSub;

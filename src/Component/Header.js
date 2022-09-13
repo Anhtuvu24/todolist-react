@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
-//import ReactDOM from 'react-dom';
-import '../CSS/Header.css'
+import '../CSS/Header.css';
 
 function Header(props) {
     const [valueInput, setValueInput] = useState('');
@@ -39,11 +38,11 @@ function Header(props) {
         setValueInput(name);
         setStatusInput('Edit');
         setEditID(id);
-    }
+    };
 
     const handleSearch = () => {
         props.setKeySearch(valueInput);
-    }
+    };
 
     const handleChange = (e) => {
         setValueInput(e.target.value);
@@ -72,6 +71,6 @@ function Header(props) {
             <button value='search' type="submit" onClick={handleSearch}>Search</button>
         </div>
     )
-}
+};
 
 export default Header;

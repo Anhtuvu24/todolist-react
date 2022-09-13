@@ -1,8 +1,6 @@
 import React from 'react';
 import '../CSS/Todo.css';
 
-//import ReactDOM from 'react-dom';
-
 function Todo(props) {
 
     const handleRemoveTodo = () => {
@@ -23,6 +21,6 @@ function Todo(props) {
             <button onClick={() => editMode(name, id)}>Edit</button>
         </div>
     )
-}
+};
 
 export default Todo;

@@ -9,7 +9,7 @@ export const themes = {
         backgroundColor: 'black',
     }
 
-}
+};
 export const Theme = React.createContext({
     theme: themes.light,
     toggleTheme: () => { },

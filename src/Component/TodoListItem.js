@@ -53,7 +53,7 @@ function TodoListItem(props) {
             {isLoading && <div>Loading...</div>}
         </div>
     )
-}
+};
 
 const TodoListItemHOC = paginationSub(TodoListItem);
 
