@@ -131,7 +131,7 @@ function TodoList() {
             <div style={{ backgroundColor: theme.theme.backgroundColor, color: theme.theme.color }} className="list-container">
                 <Header
                     addTodo={addTodo}
-                    setKeySearch={_setKeySearch}
+                    setKeySearch={setKeySearch}
                     displayList={displayList}
                     refFocus={headerRef}
                     editTodo={editTodo}
