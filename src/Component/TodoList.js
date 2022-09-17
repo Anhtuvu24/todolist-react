@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 //import ReactDOM from 'react-dom';
 import Header from './Header';
 import { nanoid } from 'nanoid';
@@ -6,67 +6,100 @@ import Footer from './Footer';
 import { Theme } from './theme';
 import ThemeButton from './ThemeButton';
 import TodoListItemHOC from './TodoListItem'
+import { instance } from './axios'
 import '../CSS/TodoList.css'
+import axios from 'axios';
 
 
 function TodoList() {
     const [list, setList] = useState([
-        {
-            name: 'todo1',
-            id: 10,
-            isCompleted: false,
-        },
+        // {
+        //     name: 'todo1',
+        //     id: 10,
+        //     isCompleted: false,
+        // },
 
-        {
-            name: 'todo2',
-            id: 1,
-            isCompleted: false,
-        },
+        // {
+        //     name: 'todo2',
+        //     id: 1,
+        //     isCompleted: false,
+        // },
 
-        {
-            name: 'todo3',
-            id: 2,
-            isCompleted: false,
-        },
-        {
-            name: 'todo1',
-            id: 3,
-            isCompleted: false,
-        },
+        // {
+        //     name: 'todo3',
+        //     id: 2,
+        //     isCompleted: false,
+        // },
+        // {
+        //     name: 'todo1',
+        //     id: 3,
+        //     isCompleted: false,
+        // },
 
-        {
-            name: 'todo2',
-            id: 4,
-            isCompleted: false,
-        },
+        // {
+        //     name: 'todo2',
+        //     id: 4,
+        //     isCompleted: false,
+        // },
 
-        {
-            name: 'todo3',
-            id: 5,
-            isCompleted: false,
-        },
-        {
-            name: 'todo1',
-            id: 6,
-            isCompleted: false,
-        },
+        // {
+        //     name: 'todo3',
+        //     id: 5,
+        //     isCompleted: false,
+        // },
+        // {
+        //     name: 'todo1',
+        //     id: 6,
+        //     isCompleted: false,
+        // },
 
-        {
-            name: 'todo2',
-            id: 7,
-            isCompleted: false,
-        },
+        // {
+        //     name: 'todo2',
+        //     id: 7,
+        //     isCompleted: false,
+        // },
 
-        {
-            name: 'todo3',
-            id: 8,
-            isCompleted: false,
-        }
+        // {
+        //     name: 'todo3',
+        //     id: 8,
+        //     isCompleted: false,
+        // }
     ]);
     const [statusList, setStatusList] = useState('All');
     const [keySearch, _setKeySearch] = useState('');
     const headerRef = useRef(null);
     const theme = useContext(Theme);
+
+    // const postRequest = async (name) => {
+    //     const id = nanoid();
+    //     const newTodo = {
+    //         id,
+    //         name: name,
+    //         isCompleted: false
+    //     }
+    //     const responese = await axios.post(
+    //         "todo", 
+    //         newTodo
+    //     )
+    //     .catch((err) => {
+    //         console.log(err);
+    //     })
+
+    //     addTodo(name, id);
+    // }
+
+    useEffect(() => {
+        const new_List = list;
+        async function fecthApi() {
+            let res = await instance.get('todo')
+            // res = await JSON.parse(res.data);
+            debugger;
+            setList(res.data);
+            console.log(res.data);
+            debugger;
+        }
+        fecthApi();   
+    }, [])
 
     const addTodo = (name) => {
         // this.setState({list: [...this.state.list, {name: name, isCompleted: false, id: nanoid()}]});
@@ -135,6 +168,7 @@ function TodoList() {
                     displayList={displayList}
                     refFocus={headerRef}
                     editTodo={editTodo}
+                    // postRequest={postRequest}
                 />
 
                 <TodoListItemHOC
