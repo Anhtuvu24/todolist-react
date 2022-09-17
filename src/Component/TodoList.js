@@ -70,23 +70,23 @@ function TodoList() {
     const headerRef = useRef(null);
     const theme = useContext(Theme);
 
-    // const postRequest = async (name) => {
-    //     const id = nanoid();
-    //     const newTodo = {
-    //         id,
-    //         name: name,
-    //         isCompleted: false
-    //     }
-    //     const responese = await axios.post(
-    //         "todo", 
-    //         newTodo
-    //     )
-    //     .catch((err) => {
-    //         console.log(err);
-    //     })
+    const postRequest = async (name) => {
+        const id = nanoid();
+        const newTodo = {
+            id,
+            name: name,
+            isCompleted: false
+        }
+        const responese = await instance.post(
+            "todo", 
+            newTodo
+        )
+        .catch((err) => {
+            console.log(err);
+        })
 
-    //     addTodo(name, id);
-    // }
+        addTodo(name, id);
+    }
 
     useEffect(() => {
         const new_List = list;
@@ -168,7 +168,7 @@ function TodoList() {
                     displayList={displayList}
                     refFocus={headerRef}
                     editTodo={editTodo}
-                    // postRequest={postRequest}
+                    postRequest={postRequest}
                 />
 
                 <TodoListItemHOC

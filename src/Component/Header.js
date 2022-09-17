@@ -5,11 +5,11 @@ function Header(props) {
     const [valueInput, setValueInput] = useState('');
     const [editID, setEditID] = useState('');
     const refInput = useRef(null);
-    const { addTodo, editTodo, setKeySearch, refFocus } = props;
+    const { addTodo, editTodo, setKeySearch, refFocus, postRequest } = props;
 
     const handleAddTodo = (id) => {
         if (valueInput !== '' && !editID) {
-            addTodo(valueInput);
+            postRequest(valueInput);
             setValueInput('');
         }
         else if (valueInput !== '' && editID) {
@@ -22,7 +22,7 @@ function Header(props) {
 
     const handleKeyPress = (e) => {
         if (!editID && valueInput !== '' && e.key === 'Enter') {
-            addTodo(valueInput);
+            postRequest(valueInput);
             setValueInput('')
         }
         else if (editID && valueInput !== '' && e.key === 'Enter') {
