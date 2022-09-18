@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 //import ReactDOM from 'react-dom';
 import Header from './Header';
 import { nanoid } from 'nanoid';
@@ -94,6 +94,10 @@ function TodoList() {
         return !(list.some((todo) => !todo.isCompleted))
     };
 
+    useEffect(() => {
+        console.log('abc');
+    },)
+
     const checkedALL = () => {
         const flag = !isCheckAll();
         const _list = list.map(function (todo) {
@@ -154,6 +158,9 @@ function TodoList() {
             <ThemeButton />
         </>
     );
+    
 };
+
+
 
 export default TodoList
