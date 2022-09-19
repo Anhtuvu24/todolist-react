@@ -70,6 +70,7 @@ function TodoList() {
     const headerRef = useRef(null);
     const theme = useContext(Theme);
 
+    ///Post request
     const postRequest = async (name) => {
         const id = nanoid();
         const newTodo = {
@@ -88,6 +89,7 @@ function TodoList() {
         addTodo(name, id);
     }
 
+    //Get request
     useEffect(() => {
         const new_List = list;
         async function fecthApi() {
