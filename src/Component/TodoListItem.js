@@ -4,7 +4,7 @@ import paginationSub from './pagination-hoc';
 import '../CSS/scrollBot.css'
 
 function TodoListItem(props) {
-    const { onScroll, list, removeTodo, handleCheckBox, isLoading, limitTodo, statusList, keySearch, editMode } = props;
+    const { onScroll, list, removeTodoDelete, handleCheckBoxPut, isLoading, limitTodo, statusList, keySearch, editMode } = props;
 
     let scrollRef = useRef();
     const scrollBottomDom = (dom) => {
@@ -38,8 +38,8 @@ function TodoListItem(props) {
                             name={todo.name}
                             isCompleted={todo.isCompleted}
                             index={index}
-                            removeTodo={removeTodo}
-                            handleCheckBox={handleCheckBox}
+                            removeTodoDelete={removeTodoDelete}
+                            handleCheckBoxPut={handleCheckBoxPut}
                             id={todo.id}
                             key={todo.id}
                             editMode={editMode}

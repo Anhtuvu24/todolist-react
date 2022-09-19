@@ -6,9 +6,8 @@ import Footer from './Footer';
 import { Theme } from './theme';
 import ThemeButton from './ThemeButton';
 import TodoListItemHOC from './TodoListItem'
-import { instance } from './axios'
+import { instance } from './axiosURL'
 import '../CSS/TodoList.css'
-import axios from 'axios';
 
 
 function TodoList() {
@@ -89,14 +88,10 @@ function TodoList() {
     }
 
     useEffect(() => {
-        const new_List = list;
         async function fecthApi() {
             let res = await instance.get('todo')
-            // res = await JSON.parse(res.data);
-            debugger;
             setList(res.data);
             console.log(res.data);
-            debugger;
         }
         fecthApi();   
     }, [])
@@ -106,39 +101,68 @@ function TodoList() {
         setList([...list, { name: name, isCompleted: false, id: nanoid() }]);
     };
 
-    const removeTodo = (index) => {
-        let new_List = list;
-        new_List.splice(index, 1);
-        setList([...new_List]);
-    };
+    const removeTodoDelete =  async (index) => {
+        const res = await instance.delete(`todo/${index}`);
+        if (res) {
+            const new_List = list;
+            new_List.splice(index, 1);
+            setList([...new_List])
+        }
+    }
 
+    // const removeTodo = (index) => {
+    //     let new_List = list;
+    //     new_List.splice(index, 1);
+    //     setList([...new_List]);
+    // };
 
-    const handleCheckBox = (check) => {
-        const _list = list.map((todo) => {
-            if (todo.id === check) {
+    const handleCheckBoxPut = async (id) => {
+        const new_List = list;
+        let statusTodo;
+        new_List.map((todo) => {
+            if(todo.id === id) {
                 todo.isCompleted = !todo.isCompleted;
+                statusTodo = todo.isCompleted;
             }
-            return todo;
-        })
-        setList(_list);
-    };
+        });
+        const res = await instance.put(`todo/${id}`, {isCompleted: statusTodo});
+        setList([...new_List]);
+    }
+
+    // const handleCheckBox = (id) => {
+    //     const _list = list.map((todo) => {
+    //         if (todo.id === id) {
+    //             todo.isCompleted = !todo.isCompleted;
+    //         }
+    //         return todo;
+    //     })
+    //     setList(_list);
+    // };
 
     const isCheckAll = () => {
         return !(list.some((todo) => !todo.isCompleted))
     };
 
-    useEffect(() => {
-        console.log('abc');
-    },)
-
-    const checkedALL = () => {
+    const checkAllPut = async () => {
         const flag = !isCheckAll();
+        for(const item of list) {
+            const res = await instance.put(`todo/${item.id}`, {isCompleted: flag});
+        }
         const _list = list.map(function (todo) {
             todo.isCompleted = flag;
             return todo;
         });
         setList(_list);
-    };
+    }
+
+    // const checkedALL = () => {
+    //     const flag = !isCheckAll();
+    //     const _list = list.map(function (todo) {
+    //         todo.isCompleted = flag;
+    //         return todo;
+    //     });
+    //     setList(_list);
+    // };
 
     const displayList = (statusList) => {
         setStatusList(statusList);
@@ -179,13 +203,13 @@ function TodoList() {
                     list={list}
                     statusList={statusList}
                     keySearch={keySearch}
-                    removeTodo={removeTodo}
-                    handleCheckBox={handleCheckBox}
+                    removeTodoDelete={removeTodoDelete}
+                    handleCheckBoxPut={handleCheckBoxPut}
                     editMode={editMode}
                 />
                 <div className='Container-footer'>
                     <b><i>{list.length}</i> items</b>
-                    <button onClick={checkedALL}>{isCheckAll() ? 'unCompleteALL' : 'completedAll'}</button>
+                    <button onClick={checkAllPut}>{isCheckAll() ? 'unCompleteALL' : 'completedAll'}</button>
                     <Footer displayList={displayList} />
                 </div>
             </div>
