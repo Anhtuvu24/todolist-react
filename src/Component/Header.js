@@ -5,7 +5,7 @@ function Header(props) {
     const [valueInput, setValueInput] = useState('');
     const [editID, setEditID] = useState('');
     const refInput = useRef(null);
-    const { addTodo, editTodo, setKeySearch, refFocus, postRequest } = props;
+    const { addTodo, ediTodoPut, setKeySearch, refFocus, postRequest } = props;
 
     const handleAddTodo = (id) => {
         if (valueInput !== '' && !editID) {
@@ -13,7 +13,7 @@ function Header(props) {
             setValueInput('');
         }
         else if (valueInput !== '' && editID) {
-            editTodo(valueInput, id);
+            ediTodoPut(valueInput, id);
             setValueInput('');
             // setStatusInput('Add');
             setEditID(null);
@@ -26,7 +26,7 @@ function Header(props) {
             setValueInput('')
         }
         else if (editID && valueInput !== '' && e.key === 'Enter') {
-            editTodo(valueInput, editID);
+            ediTodoPut(valueInput, editID);
             setValueInput('');
             // setStatusInput('Add');
             setEditID(null);
@@ -37,8 +37,6 @@ function Header(props) {
     const onFocusInput = (name, id) => {
         refInput.current.focus();
         setValueInput(name);
-        // setStatusInput('Edit');
-        debugger;
         setEditID(id);
     };
 

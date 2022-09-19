@@ -1,29 +1,22 @@
 import React, { useRef } from 'react';
 import Todo from './Todo';
-import paginationSub from './pagination-hoc';
+import usePaginationSub from './pagination-hoc';
 import '../CSS/scrollBot.css'
 
 function TodoListItem(props) {
-    const { onScroll, list, removeTodo, handleCheckBox, isLoading, limitTodo, statusList, keySearch, editMode } = props;
-
     let scrollRef = useRef();
-    const scrollBottomDom = (dom) => {
-        return (dom.scrollHeight - dom.clientHeight) - dom.scrollTop;
-    };
-
-    const onScrollBot = () => {
-        const bot = scrollBottomDom(scrollRef);
-        if (bot < 3 && (limitTodo < list.length)) {
-            onScroll();
-        }
-    };
-
+    const { list, removeTodoDelete, handleCheckBoxPut, statusList, keySearch, editMode } = props;
+    const [limitTodo, isLoading, onScrollBot] = usePaginationSub(scrollRef, list);
     const setScrollRef = (e) => {
         scrollRef = e;
     };
+    const onScrollBottom = () => {
+        onScrollBot()
+        console.log((scrollRef.scrollHeight - scrollRef.clientHeight) - scrollRef.scrollTop);
+    };
 
     return (
-        <div className='scrollBot' onScroll={onScrollBot} ref={setScrollRef}>
+        <div className='scrollBot' onScroll={onScrollBottom} ref={setScrollRef}>
             {list.map((todo, index) => {
                 if (
                     (
@@ -38,8 +31,8 @@ function TodoListItem(props) {
                             name={todo.name}
                             isCompleted={todo.isCompleted}
                             index={index}
-                            removeTodo={removeTodo}
-                            handleCheckBox={handleCheckBox}
+                            removeTodoDelete={removeTodoDelete}
+                            handleCheckBoxPut={handleCheckBoxPut}
                             id={todo.id}
                             key={todo.id}
                             editMode={editMode}
@@ -54,6 +47,6 @@ function TodoListItem(props) {
     )
 };
 
-const TodoListItemHOC = paginationSub(TodoListItem);
+// const TodoListItemHOC = paginationSub(TodoListItem);
 
-export default TodoListItemHOC;
+export default TodoListItem;
