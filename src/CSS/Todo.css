@@ -9,22 +9,17 @@
     margin: 20px;
     height: 50px; 
     display: flex;
-    justify-content: center;
-}
-
-.todo-container li {
-    margin-right: 150px;
-    margin-left: 15px;
-    text-align: left;
-    display: inline-block;
-    height: 20px;
-    width: 60px;
+    justify-content: space-around;
 }
 
 .todoDisplay {
     width: 200px;
     text-align: left;
     margin-left: 50px;
+}
+
+.scrollBot {
+    width: 478px;
 }
 
 

@@ -77,7 +77,7 @@ function TodoList() {
             name: name,
             isCompleted: false
         }
-        const res = await instance.post(
+        await instance.post(
             "todo",
             newTodo
         )
@@ -102,8 +102,8 @@ function TodoList() {
         setList([...list, { name: name, isCompleted: false, id }]);
     };
 
-    const removeTodoDelete = async (index) => {
-        const res = await instance.delete(`todo/${index}`);
+    const removeTodoDelete = async (index, id) => {
+        const res = await instance.delete(`todo/${id}`);
         if (res) {
             const new_List = list;
             new_List.splice(index, 1);
@@ -124,9 +124,10 @@ function TodoList() {
             if (todo.id === id) {
                 todo.isCompleted = !todo.isCompleted;
                 statusTodo = todo.isCompleted;
+                return todo;
             }
         });
-        const res = await instance.put(`todo/${id}`, { isCompleted: statusTodo });
+        await instance.put(`todo/${id}`, { isCompleted: statusTodo });
         setList([...new_List]);
     }
 
@@ -147,9 +148,9 @@ function TodoList() {
     const checkAllPut = async () => {
         const flag = !isCheckAll();
         for (const item of list) {
-            const res = await instance.put(`todo/${item.id}`, { isCompleted: flag });
+            await instance.put(`todo/${item.id}`, { isCompleted: flag });
         }
-        const _list = list.map(function (todo) {
+        const _list = list.map(todo => {
             todo.isCompleted = flag;
             return todo;
         });
@@ -174,7 +175,7 @@ function TodoList() {
     };
 
     const ediTodoPut = async (name, id) => {
-        const res = await instance.put(`todo/${id}`, { name })
+        await instance.put(`todo/${id}`, { name })
         const new_List = list.map(todo => {
             if (todo.id === id) {
                 todo.name = name;
@@ -221,7 +222,7 @@ function TodoList() {
                 <div className='Container-footer'>
                     <b><i>{list.length}</i> items</b>
                     <button onClick={checkAllPut}>{isCheckAll() ? 'unCompleteALL' : 'completedAll'}</button>
-                    <Footer displayList={displayList} />
+                    <Footer displayList={displayList} statusList={statusList} />
                 </div>
             </div>
             <ThemeButton />

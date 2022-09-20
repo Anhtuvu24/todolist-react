@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 // function paginationSub(WrappedComponent) {
 //     return class extends React.Component {
@@ -40,7 +40,6 @@ function usePaginationSub(scrollRef, list) {
     const [isLoading, setIsLoading] = useState(false);
 
     const scrollBottomDom = (dom) => {
-        debugger;
         return (dom.scrollHeight - dom.clientHeight) - dom.scrollTop;
     };
 
@@ -49,7 +48,6 @@ function usePaginationSub(scrollRef, list) {
         debugger;
         if (bot < 3 && (limitTodo < list.length)) {
             onScroll();
-            debugger;
         }
     };
 

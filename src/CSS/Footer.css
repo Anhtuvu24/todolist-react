@@ -4,13 +4,19 @@
     box-sizing: border-box;
 }
 
-.filterList {
-    margin: 10px;
+.Selected {
+    background-color: aqua;
 }
 
-.filterList button {
-    margin: 4px;
+.filterList {
+    display: flex;
+    justify-content: space-between;
+    width: 8%;
+    align-items: center;
+    margin: 5px;
 }
+
+
 
 .filterList > button:not(.active):hover {
     background: rgb(62, 140, 204);

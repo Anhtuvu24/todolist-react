@@ -14,7 +14,6 @@ function TodoListItem(props) {
         onScrollBot()
         console.log((scrollRef.scrollHeight - scrollRef.clientHeight) - scrollRef.scrollTop);
     };
-
     return (
         <div className='scrollBot' onScroll={onScrollBottom} ref={setScrollRef}>
             {list.map((todo, index) => {

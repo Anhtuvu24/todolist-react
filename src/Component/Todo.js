@@ -5,7 +5,7 @@ function Todo(props) {
     const { isCompleted, id, index, name, handleCheckBoxPut, editMode, removeTodoDelete } = props;
 
     const handleRemoveTodo = () => {
-        removeTodoDelete(props.index);
+        removeTodoDelete(index, id);
     };
     return (
         <div className='todo-container'>

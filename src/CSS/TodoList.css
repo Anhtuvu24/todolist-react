@@ -5,15 +5,18 @@
 }
 
 .list-container {
+    display: flex;
+    flex-direction: column;
     padding: 30px;
     width: 100%;
-    text-align: center;
+    align-items: center;
 }
 
 .Container-footer {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
 }
 
 .Container-footer b {
