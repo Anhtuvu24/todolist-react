@@ -6,13 +6,12 @@ import '../CSS/scrollBot.css'
 function TodoListItem(props) {
     let scrollRef = useRef();
     const { list, removeTodoDelete, handleCheckBoxPut, statusList, keySearch, editMode } = props;
-    const [limitTodo, isLoading, onScrollBot] = usePaginationSub(scrollRef, list);
+    const [limitTodo, isLoading, onScrollBot] = usePaginationSub(list);
     const setScrollRef = (e) => {
         scrollRef = e;
     };
     const onScrollBottom = () => {
-        onScrollBot()
-        console.log((scrollRef.scrollHeight - scrollRef.clientHeight) - scrollRef.scrollTop);
+        onScrollBot(scrollRef);
     };
     return (
         <div className='scrollBot' onScroll={onScrollBottom} ref={setScrollRef}>

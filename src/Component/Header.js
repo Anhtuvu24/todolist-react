@@ -5,7 +5,7 @@ function Header(props) {
     const [valueInput, setValueInput] = useState('');
     const [editID, setEditID] = useState('');
     const refInput = useRef(null);
-    const { addTodo, ediTodoPut, setKeySearch, refFocus, postRequest } = props;
+    const { ediTodoPut, setKeySearch, refFocus, postRequest } = props;
 
     const handleAddTodo = (id) => {
         if (valueInput !== '' && !editID) {

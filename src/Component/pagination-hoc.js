@@ -35,7 +35,7 @@ import React, { useState } from 'react';
 // };
 
 
-function usePaginationSub(scrollRef, list) {
+function usePaginationSub(list) {
     const [limitTodo, setLimitTodo] = useState(3);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -43,7 +43,7 @@ function usePaginationSub(scrollRef, list) {
         return (dom.scrollHeight - dom.clientHeight) - dom.scrollTop;
     };
 
-    const onScrollBot = () => {
+    const onScrollBot = (scrollRef) => {
         const bot = scrollBottomDom(scrollRef);
         debugger;
         if (bot < 3 && (limitTodo < list.length)) {
@@ -55,11 +55,11 @@ function usePaginationSub(scrollRef, list) {
         setIsLoading(true);
         setTimeout(() => {
             setIsLoading(false);
-            setLimitTodo(limitTodo + 2);
+            setLimitTodo(limitTodo + 5);
         }, 2000);
         console.log(limitTodo);
     }
     return [limitTodo, isLoading, onScrollBot];
-}   
+}
 
 export default usePaginationSub;
