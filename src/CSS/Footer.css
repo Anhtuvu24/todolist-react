@@ -16,10 +16,16 @@
     margin: 5px;
 }
 
-
+.filterList button {
+    border: none;
+    margin: 0 5px 0 5px;
+    padding: 2px;    
+    border-radius: 16%;
+}
 
 .filterList > button:not(.active):hover {
-    background: rgb(62, 140, 204);
+    background-color: rgba(175, 47, 47, 0.15);
+    border: none;
     color: red;
 }
 

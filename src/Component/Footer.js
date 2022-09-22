@@ -6,7 +6,7 @@ function Footer(props) {
         <>
             <div className='filterList'>
                 <button className={statusList === 'All' ? 'Selected' : ''} onClick={() => displayList("All")}>All</button>
-                <button className={statusList === 'Complete' ? 'Selected' : ''} onClick={() => displayList("Complete")}>complete</button>
+                <button className={statusList === 'Complete' ? 'Selected' : ''} onClick={() => displayList("Complete")}>Complete</button>
                 <button className={statusList === 'Active' ? 'Selected' : ''} onClick={() => displayList("Active")}>Active</button>
             </div>
 
