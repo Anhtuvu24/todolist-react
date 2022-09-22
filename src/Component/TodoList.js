@@ -76,17 +76,14 @@ function TodoList() {
             id,
             name: name,
             isCompleted: false
-        }
-        await instance.post(
-            "todo",
-            newTodo
-        )
-            .catch((err) => {
-                console.log(err);
-            })
+        };
+        await instance.post("todo", newTodo)
+        .catch((err) => {
+            console.log(err);
+        })
 
         addTodo(name, id);
-    }
+    };
 
     //Get request
     useEffect(() => {
@@ -95,7 +92,7 @@ function TodoList() {
             setList(res.data);
         }
         fecthApi();
-    }, [])
+    }, []);
 
     const addTodo = (name, id) => {
         // this.setState({list: [...this.state.list, {name: name, isCompleted: false, id: nanoid()}]});
@@ -108,8 +105,8 @@ function TodoList() {
             const new_List = list;
             new_List.splice(index, 1);
             setList([...new_List])
-        }
-    }
+        };
+    };
 
     // const removeTodo = (index) => {
     //     let new_List = list;
@@ -142,14 +139,16 @@ function TodoList() {
     // };
 
     const isCheckAll = () => {
-        return !(list.some((todo) => !todo.isCompleted))
+        return !(list.some((todo) => !todo.isCompleted));
     };
 
     const checkAllPut = async () => {
         const flag = !isCheckAll();
         for (const item of list) {
-            await instance.put(`todo/${item.id}`, { isCompleted: flag });
-        }
+            if(item.isCompleted != flag) {
+                await instance.put(`todo/${item.id}`, { isCompleted: flag });
+            }
+        };
         const _list = list.map(todo => {
             todo.isCompleted = flag;
             return todo;
@@ -210,7 +209,7 @@ function TodoList() {
                     refFocus={headerRef}
                     ediTodoPut={ediTodoPut}
                     postRequest={postRequest}
-                />x``s
+                />
                 <TodoListItemHOC
                     list={list}
                     statusList={statusList}
@@ -221,7 +220,7 @@ function TodoList() {
                 />
                 <div className='Container-footer'>
                     <b><i>{list.length}</i> items</b>
-                    <button onClick={checkAllPut}>{isCheckAll() ? 'unCompleteALL' : 'completedAll'}</button>
+                    <button onClick={checkAllPut}>{isCheckAll() ? 'UnCompleteALL' : 'completedAll'}</button>
                     <Footer displayList={displayList} statusList={statusList} />
                 </div>
             </div>
@@ -234,4 +233,3 @@ function TodoList() {
 
 
 export default TodoList
-
