@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ThemeProvider from './Component/ThemeProvider'
-import './CSS/index.css'
+import { Provider } from 'react-redux';
+import store from './store';
+import './CSS/index.css';
 
 ReactDOM.render (
-    <div className="Container">
+    <Provider store={store}>
+      <div className="Container">
         <ThemeProvider />
-    </div>,
+      </div>
+    </Provider>,
   document.getElementById('root')
 )
     

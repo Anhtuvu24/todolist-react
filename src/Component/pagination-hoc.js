@@ -21,7 +21,6 @@ function usePaginationSub(list) {
             setIsLoading(false);
             setLimitTodo(limitTodo + 5);
         }, 2000);
-        console.log(limitTodo);
     }
     return [limitTodo, isLoading, onScrollBot];
 }

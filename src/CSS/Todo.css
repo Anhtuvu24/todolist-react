@@ -16,6 +16,7 @@
     width: 350px;
     text-align: left;
     word-wrap: break-word;
+
 }
 
 .scrollBot {
@@ -26,6 +27,7 @@
 .completed {
     text-decoration: line-through;
     opacity: 0.5;
+    transition: all 0.5s ease-in-out;
 }
 
 .todo-container button {

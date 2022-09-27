@@ -7,71 +7,24 @@ import { Theme } from './theme';
 import ThemeButton from './ThemeButton';
 import TodoListItemHOC from './TodoListItem'
 import { instance } from './axiosURL'
+import  { useSelector, useDispatch } from 'react-redux';
+import { addTodoRD, getListRD, removeTodoRD } from '../actions/todo';
 import '../CSS/TodoList.css'
 
 
 function TodoList() {
-    const [list, setList] = useState([
-        // {
-        //     name: 'todo1',
-        //     id: 10,
-        //     isCompleted: false,
-        // },
-
-        // {
-        //     name: 'todo2',
-        //     id: 1,
-        //     isCompleted: false,
-        // },
-
-        // {
-        //     name: 'todo3',
-        //     id: 2,
-        //     isCompleted: false,
-        // },
-        // {
-        //     name: 'todo1',
-        //     id: 3,
-        //     isCompleted: false,
-        // },
-
-        // {
-        //     name: 'todo2',
-        //     id: 4,
-        //     isCompleted: false,
-        // },
-
-        // {
-        //     name: 'todo3',
-        //     id: 5,
-        //     isCompleted: false,
-        // },
-        // {
-        //     name: 'todo1',
-        //     id: 6,
-        //     isCompleted: false,
-        // },
-
-        // {
-        //     name: 'todo2',
-        //     id: 7,
-        //     isCompleted: false,
-        // },
-
-        // {
-        //     name: 'todo3',
-        //     id: 8,
-        //     isCompleted: false,
-        // }
-    ]);
+    const [list, setList] = useState([]);
     const [statusList, setStatusList] = useState('All');
     const [keySearch, _setKeySearch] = useState('');
     const headerRef = useRef(null);
     const theme = useContext(Theme);
+    const todoListRD = useSelector(state => state.todo.list)
+    const dispatch = useDispatch();
 
     ///Post request
     const postRequest = async (name) => {
         const id = nanoid();
+        addTodo(name, id);
         const newTodo = {
             id,
             name: name,
@@ -81,15 +34,16 @@ function TodoList() {
         .catch((err) => {
             console.log(err);
         })
-
-        addTodo(name, id);
+        const action = addTodoRD(newTodo);
+        dispatch(action);
     };
 
     //Get request
     useEffect(() => {
         async function fecthApi() {
             let res = await instance.get('todo')
-            setList(res.data);
+            const action = getListRD(res.data);
+            dispatch(action);
         }
         fecthApi();
     }, []);
@@ -100,12 +54,9 @@ function TodoList() {
     };
 
     const removeTodoDelete = async (index, id) => {
-        const res = await instance.delete(`todo/${id}`);
-        if (res) {
-            const new_List = list;
-            new_List.splice(index, 1);
-            setList([...new_List])
-        };
+        const action = removeTodoRD(index);
+        dispatch(action);
+        await instance.delete(`todo/${id}`);
     };
 
     // const removeTodo = (index) => {
@@ -124,8 +75,8 @@ function TodoList() {
                 return todo;
             }
         });
-        await instance.put(`todo/${id}`, { isCompleted: statusTodo });
         setList([...new_List]);
+        await instance.put(`todo/${id}`, { isCompleted: statusTodo });
     }
 
     // const handleCheckBox = (id) => {
@@ -175,7 +126,7 @@ function TodoList() {
 
     const ediTodoPut = async (name, id) => {
         await instance.put(`todo/${id}`, { name })
-        const new_List = list.map(todo => {
+        const new_List = list.map(todo => {//
             if (todo.id === id) {
                 todo.name = name;
             }
@@ -183,6 +134,8 @@ function TodoList() {
         })
         setList(new_List);
     }
+  
+
 
     // const editTodo = (name, id) => {
     //     const _list = list.map(todo => {
@@ -198,12 +151,15 @@ function TodoList() {
         _setKeySearch(keySearch);
     };
     
+    /*---------------------------------------redux-------------------------------------------*/
+    
+    console.log(todoListRD);
+
     return (
         <>
             {/* fix------------------------------------- */}
             <div style={{ backgroundColor: theme.theme.backgroundColor, color: theme.theme.color }} className="list-container">
                 <Header
-                    addTodo={addTodo}
                     setKeySearch={setKeySearch}
                     displayList={displayList}
                     refFocus={headerRef}
@@ -211,7 +167,7 @@ function TodoList() {
                     postRequest={postRequest}
                 />
                 <TodoListItemHOC
-                    list={list}
+                    list={todoListRD}//Note
                     statusList={statusList}
                     keySearch={keySearch}
                     removeTodoDelete={removeTodoDelete}
@@ -219,7 +175,7 @@ function TodoList() {
                     editMode={editMode}
                 />
                 <div className='Container-footer'>
-                    <b><i>{list.length}</i> items</b>
+                    <b><i>{todoListRD.length}</i> items</b>
                     <button onClick={checkAllPut}>{isCheckAll() ? 'UnCompleteALL' : 'completedAll'}</button>
                     <Footer displayList={displayList} statusList={statusList} />
                 </div>

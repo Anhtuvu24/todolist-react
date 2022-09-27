@@ -1,17 +1,11 @@
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
 .Selected {
     background-color: aqua;
+    transition: all 0.1s ease-in-out 0.05s;
 }
 
 .filterList {
     display: flex;
     justify-content: space-between;
-    width: 8%;
     align-items: center;
     margin: 5px;
 }
