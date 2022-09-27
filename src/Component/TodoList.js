@@ -7,9 +7,9 @@ import { Theme } from './theme';
 import ThemeButton from './ThemeButton';
 import TodoListItemHOC from './TodoListItem'
 import { instance } from './axiosURL'
-import  { useSelector, useDispatch } from 'react-redux';
-import { addTodoRD, getListRD, removeTodoRD } from '../actions/todo';
-import '../CSS/TodoList.css'
+import { useSelector, useDispatch } from 'react-redux';
+import { addTodoRD, getListRD, removeTodoRD, activeTodo } from '../actions/todo';
+import '../CSS/TodoList.css';
 
 
 function TodoList() {
@@ -18,22 +18,23 @@ function TodoList() {
     const [keySearch, _setKeySearch] = useState('');
     const headerRef = useRef(null);
     const theme = useContext(Theme);
-    const todoListRD = useSelector(state => state.todo.list)
+    const todoListRD = useSelector(state => state.todo.list);
     const dispatch = useDispatch();
 
     ///Post request
     const postRequest = async (name) => {
         const id = nanoid();
-        addTodo(name, id);
         const newTodo = {
             id,
             name: name,
             isCompleted: false
         };
+        addTodoRD(name, id);
+
         await instance.post("todo", newTodo)
-        .catch((err) => {
-            console.log(err);
-        })
+            .catch((err) => {
+                console.log(err);
+            })
         const action = addTodoRD(newTodo);
         dispatch(action);
     };
@@ -48,10 +49,10 @@ function TodoList() {
         fecthApi();
     }, []);
 
-    const addTodo = (name, id) => {
-        // this.setState({list: [...this.state.list, {name: name, isCompleted: false, id: nanoid()}]});
-        setList([...list, { name: name, isCompleted: false, id }]);
-    };
+    // const addTodo = (name, id) => {
+    //     // this.setState({list: [...this.state.list, {name: name, isCompleted: false, id: nanoid()}]});
+    //     setList([...list, { name: name, isCompleted: false, id }]);
+    // };
 
     const removeTodoDelete = async (index, id) => {
         const action = removeTodoRD(index);
@@ -65,56 +66,32 @@ function TodoList() {
     //     setList([...new_List]);
     // };
 
-    const handleCheckBoxPut = async (id) => {
-        const new_List = list;
+    const handleCheckBoxPut = async (id, index) => {
+        const new_List = [...todoListRD];
         let statusTodo;
-        new_List.map((todo) => {
-            if (todo.id === id) {
-                todo.isCompleted = !todo.isCompleted;
-                statusTodo = todo.isCompleted;
-                return todo;
-            }
-        });
-        setList([...new_List]);
+        statusTodo = !new_List[index].isCompleted;
+        const action = activeTodo(index);
+        dispatch(action);
         await instance.put(`todo/${id}`, { isCompleted: statusTodo });
-    }
-
-    // const handleCheckBox = (id) => {
-    //     const _list = list.map((todo) => {
-    //         if (todo.id === id) {
-    //             todo.isCompleted = !todo.isCompleted;
-    //         }
-    //         return todo;
-    //     })
-    //     setList(_list);
-    // };
+    };
 
     const isCheckAll = () => {
-        return !(list.some((todo) => !todo.isCompleted));
+        return !(todoListRD.some((todo) => !todo.isCompleted));
     };
 
     const checkAllPut = async () => {
         const flag = !isCheckAll();
-        for (const item of list) {
-            if(item.isCompleted != flag) {
+        for (const item of todoListRD) {
+            if (item.isCompleted !== flag) {
                 await instance.put(`todo/${item.id}`, { isCompleted: flag });
             }
         };
-        const _list = list.map(todo => {
+        const _list = todoListRD.map(todo => {
             todo.isCompleted = flag;
             return todo;
         });
         setList(_list);
-    }
-
-    // const checkedALL = () => {
-    //     const flag = !isCheckAll();
-    //     const _list = list.map(function (todo) {
-    //         todo.isCompleted = flag;
-    //         return todo;
-    //     });
-    //     setList(_list);
-    // };
+    };
 
     const displayList = (statusList) => {
         setStatusList(statusList);
@@ -125,6 +102,7 @@ function TodoList() {
     };
 
     const ediTodoPut = async (name, id) => {
+        console.log(list);
         await instance.put(`todo/${id}`, { name })
         const new_List = list.map(todo => {//
             if (todo.id === id) {
@@ -133,27 +111,11 @@ function TodoList() {
             return todo;
         })
         setList(new_List);
-    }
-  
-
-
-    // const editTodo = (name, id) => {
-    //     const _list = list.map(todo => {
-    //         if (todo.id === id) {
-    //             todo.name = name;
-    //         }
-    //         return todo;
-    //     })
-    //     setList(_list);
-    // };
+    };
 
     const setKeySearch = (keySearch) => {
         _setKeySearch(keySearch);
     };
-    
-    /*---------------------------------------redux-------------------------------------------*/
-    
-    console.log(todoListRD);
 
     return (
         <>
@@ -167,7 +129,6 @@ function TodoList() {
                     postRequest={postRequest}
                 />
                 <TodoListItemHOC
-                    list={todoListRD}//Note
                     statusList={statusList}
                     keySearch={keySearch}
                     removeTodoDelete={removeTodoDelete}

@@ -5,12 +5,12 @@ import { Provider } from 'react-redux';
 import store from './store';
 import './CSS/index.css';
 
-ReactDOM.render (
-    <Provider store={store}>
-      <div className="Container">
-        <ThemeProvider />
-      </div>
-    </Provider>,
+ReactDOM.render(
+  <Provider store={store}>
+    <div className="Container">
+      <ThemeProvider />
+    </div>
+  </Provider>,
   document.getElementById('root')
 )
-    
+

@@ -1,12 +1,15 @@
 import React, { useRef } from 'react';
 import Todo from './Todo';
 import usePaginationSub from './pagination-hoc';
+import { useSelector } from 'react-redux';
 import '../CSS/scrollBot.css'
 
 function TodoListItem(props) {
     let scrollRef = useRef();
-    const { list, removeTodoDelete, handleCheckBoxPut, statusList, keySearch, editMode } = props;
-    const [limitTodo, isLoading, onScrollBot] = usePaginationSub(list);
+    const { removeTodoDelete, handleCheckBoxPut, statusList, keySearch, editMode } = props;
+    const todoListRD = useSelector(state => state.todo.list);
+
+    const [limitTodo, isLoading, onScrollBot] = usePaginationSub(todoListRD);
     const setScrollRef = (e) => {
         scrollRef = e;
     };
@@ -15,7 +18,7 @@ function TodoListItem(props) {
     };
     return (
         <div className='scrollBot' onScroll={onScrollBottom} ref={setScrollRef}>
-            {list.map((todo, index) => {
+            {todoListRD.map((todo, index) => {
                 if (
                     (
                         (todo.isCompleted && statusList === 'Complete') ||

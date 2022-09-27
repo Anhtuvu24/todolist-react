@@ -20,14 +20,19 @@ const todoReducer = (state = initState, action) => {
                 list: new_List,
             };
         }
-        case 'ACTIVE-TODO': {
-            return state;
-        }
         case 'GET-LIST': {
             const getList = [...action.payload];
             return {
                 ...state,
-                list:getList,
+                list: getList,
+            }
+        }
+        case 'ACTIVE-TODO': {
+            const new_List = [...state.list];
+            new_List[action.payload].isCompleted = !new_List[action.payload].isCompleted;
+            return {
+                ...state,
+                list: new_List,
             }
         }
         default:

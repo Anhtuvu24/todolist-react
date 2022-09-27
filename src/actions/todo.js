@@ -6,8 +6,8 @@ export const addTodoRD = (todo) => {
 };
 
 export const removeTodoRD = (index) => {
-    return { 
-        type: 'REMOVE-TODO', 
+    return {
+        type: 'REMOVE-TODO',
         payload: index,
     }
 };
@@ -16,5 +16,12 @@ export const getListRD = (list) => {
     return {
         type: 'GET-LIST',
         payload: list,
+    }
+}
+
+export const activeTodo = (index) => {
+    return {
+        type: 'ACTIVE-TODO',
+        payload: index,
     }
 }
