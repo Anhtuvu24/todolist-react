@@ -1,9 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import ThemeProvider from './Component/ThemeProvider'
-import { Provider } from 'react-redux';
-import store from './store';
-import './CSS/index.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import ThemeProvider from "./Component/ThemeProvider";
+import { Provider } from "react-redux";
+import store from "./app/store";
+import "./CSS/index.css";
 
 ReactDOM.render(
   <Provider store={store}>
@@ -11,6 +11,5 @@ ReactDOM.render(
       <ThemeProvider />
     </div>
   </Provider>,
-  document.getElementById('root')
-)
-
+  document.getElementById("root")
+);
