@@ -17,6 +17,7 @@ import {
   checkALL,
 } from "../features/todoList/listSlice";
 import "../CSS/TodoList.css";
+import { List } from "immutable";
 import { useDispatch, useSelector } from "react-redux";
 
 function TodoList(props) {
@@ -29,6 +30,7 @@ function TodoList(props) {
     editTodo,
     checkALL,
   } = props;
+  debugger;
   const [statusList, setStatusList] = useState("All");
   const [keySearch, _setKeySearch] = useState("");
   const headerRef = useRef(null);
@@ -85,7 +87,8 @@ function TodoList(props) {
 
   const isCheckAll = () => {
     console.log(todoListRD);
-    return !todoListRD.some((todo) => !todo.isCompleted);
+    debugger;
+    return !todoListRD.toArray().some((todo) => !todo.isCompleted);
   };
 
   const checkAllPut = async () => {
@@ -142,7 +145,7 @@ function TodoList(props) {
         />
         <div className="Container-footer">
           <b>
-            <i>{todoListRD.length}</i> items
+            <i>{todoListRD.size}</i> items
           </b>
           <button onClick={checkAllPut}>
             {isCheckAll() ? "UnCompleteALL" : "completedAll"}
@@ -156,9 +159,9 @@ function TodoList(props) {
 }
 
 const mapStateToProps = (state) => {
-  return {
-    todoListRD: state.list,
-  };
+  const todoListRD = state.list.list;
+  debugger;
+  return todoListRD;
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -169,5 +172,4 @@ const mapDispatchToProps = (dispatch) => ({
   editTodo: ({ name, id }) => dispatch(editTodo({ name, id })),
   checkALL: (check) => dispatch(checkALL(check)),
 });
-
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList);

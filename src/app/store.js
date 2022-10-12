@@ -1,14 +1,22 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import thunk from "redux-thunk";
-import listTodo from "../features/todoList/listSlice";
+import {
+  combineReducers,
+  configureStore,
+  getDefaultMiddleware,
+} from "@reduxjs/toolkit";
+import createSagaMiddleware from "@redux-saga/core";
+import rootSaga from "./rootSaga";
+import reducerTodo from "../features/todoList/listSlice";
 
+const sagaMiddleware = createSagaMiddleware();
 const reducer = combineReducers({
-  list: listTodo,
+  list: reducerTodo,
 });
-
 const store = configureStore({
   reducer: reducer,
-  middleware: [thunk],
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(sagaMiddleware),
 });
+
+sagaMiddleware.run(rootSaga);
 
 export default store;

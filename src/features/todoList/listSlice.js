@@ -1,40 +1,68 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Immutable from "immutable";
 import { List, merge } from "immutable";
+const initialState = {
+  list: List([]),
+};
 const listTodo = createSlice({
   name: "listTodo",
-  initialState: List([]),
+  initialState,
   reducers: {
     addTodoRD: (state, action) => {
-      state.push(action.payload);
+      const new_List = state.list.push(action.payload);
+      return {
+        ...state,
+        list: new_List,
+      };
     },
     removeTodoRD: (state, action) => {
-      return state.delete(action.payload);
+      const new_List = state.list.delete(action.payload);
+      // return state.list.delete(action.payload);
+      return {
+        ...state,
+        list: new_List,
+      };
     },
     getListRD: (state, action) => {
-      console.log(state);
-      return merge(state, action.payload);
+      const new_List = List(action.payload);
+      debugger;
+      return {
+        ...state,
+        list: new_List,
+      };
     },
     activeTodo: (state, action) => {
-      state[action.payload].isCompleted = !state[action.payload].isCompleted;
+      debugger;
+      // const flag = state.list.getIn([action.payload, isCompleted]);
+      // state.getin([action.payload, 'isCompleted'], ....)
+      const new_List = state.list.setIn([action.payload, "isCompleted"], true);
     },
     editTodo: (state, action) => {
-      state.map((todo) => {
+      const new_List = state.list.map((todo) => {
         if (todo.id === action.payload.id) {
           todo.name = action.payload.name;
         }
       });
+      return {
+        ...state,
+        list: new_List,
+      };
     },
     checkALL: (state, action) => {
-      const new_List = [...state];
+      const new_List = [...state.list];
       new_List.map((todo) => {
         todo.isCompleted = action.payload;
       });
-      return new_List;
+      return {
+        ...state,
+        list: new_List,
+      };
     },
   },
 });
 
 const { reducer, actions } = listTodo;
+debugger;
 export const {
   addTodoRD,
   removeTodoRD,
@@ -43,4 +71,5 @@ export const {
   editTodo,
   checkALL,
 } = actions;
+export const actionsCheck = listTodo.actions;
 export default reducer;
