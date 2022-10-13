@@ -7,18 +7,7 @@ import { Theme } from "./theme";
 import ThemeButton from "./ThemeButton";
 import TodoListItem from "./TodoListItem";
 import { instance } from "./axiosURL";
-import { connect } from "react-redux";
-import {
-  addTodoRD,
-  getListRD,
-  removeTodoRD,
-  activeTodo,
-  editTodo,
-  checkALL,
-} from "../features/todoList/listSlice";
 import "../CSS/TodoList.css";
-import { List } from "immutable";
-import { useDispatch, useSelector } from "react-redux";
 
 function TodoList(props) {
   const {
@@ -30,7 +19,6 @@ function TodoList(props) {
     editTodo,
     checkALL,
   } = props;
-  debugger;
   const [statusList, setStatusList] = useState("All");
   const [keySearch, _setKeySearch] = useState("");
   const headerRef = useRef(null);
@@ -86,9 +74,7 @@ function TodoList(props) {
   };
 
   const isCheckAll = () => {
-    console.log(todoListRD);
-    debugger;
-    return !todoListRD.toArray().some((todo) => !todo.isCompleted);
+    return !todoListRD.some((todo) => !todo.isCompleted);
   };
 
   const checkAllPut = async () => {
@@ -105,13 +91,12 @@ function TodoList(props) {
     setStatusList(statusList);
   };
 
-  const editMode = (name, id) => {
-    headerRef.current.onFocusInput(name, id);
-    debugger;
+  const editMode = (name, id, index) => {
+    headerRef.current.onFocusInput(name, id, index);
   };
 
-  const ediTodoPut = async (name, id) => {
-    editTodo({ name, id });
+  const ediTodoPut = async (name, id, index) => {
+    editTodo({ name, id, index });
     await instance.put(`todo/${id}`, { name });
   };
 
@@ -158,18 +143,17 @@ function TodoList(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  const todoListRD = state.list.list;
-  debugger;
-  return todoListRD;
-};
+// const mapStateToProps = (state) => {
+//   const todoListRD = state.list.list;
+//   return todoListRD;
+// };
 
-const mapDispatchToProps = (dispatch) => ({
-  addTodoRD: (todo) => dispatch(addTodoRD(todo)),
-  removeTodoRD: (index) => dispatch(removeTodoRD(index)),
-  getListRD: (list) => dispatch(getListRD(list)),
-  activeTodo: (index) => dispatch(activeTodo(index)),
-  editTodo: ({ name, id }) => dispatch(editTodo({ name, id })),
-  checkALL: (check) => dispatch(checkALL(check)),
-});
-export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
+// const mapDispatchToProps = (dispatch) => ({
+//   addTodoRD: (todo) => dispatch(addTodoRD(todo)),
+//   removeTodoRD: (index) => dispatch(removeTodoRD(index)),
+//   getListRD: (list) => dispatch(getListRD(list)),
+//   activeTodo: (index) => dispatch(activeTodo(index)),
+//   editTodo: ({ name, id }) => dispatch(editTodo({ name, id })),
+//   checkALL: (check) => dispatch(checkALL(check)),
+// });
+export default TodoList;

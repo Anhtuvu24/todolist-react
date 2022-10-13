@@ -1,15 +1,30 @@
-import { fork, take } from "redux-saga/effects";
+import {
+  call,
+  put,
+  take,
+  takeEvery,
+  fork,
+  select,
+  delay,
+  takeLatest,
+} from "redux-saga/effects";
 import { actionsCheck } from "../todoList/listSlice";
+import { instance } from "../../Component/axiosURL";
+import {
+  addTodoRD,
+  removeTodoRD,
+  getListRD,
+  activeTodo,
+  editTodo,
+  checkALL,
+} from "../todoList/listSlice";
 
-function* addTodoRDS() {
-  const action = yield take(actionsCheck.addTodoRD.type);
-  yield fork(handleAddTodo, action.payload);
+function* sgGetList() {
+  const res = yield instance.get(`todo`);
+  yield put(getListRD(res.data));
 }
 
-export function* handleAddTodo(payload) {
-  console.log(payload);
+function* sgWatchGetList() {
+  yield takeEvery("listTodo / getListRD", sgGetList);
 }
-
-export default function* authSaga() {
-  yield fork(addTodoRDS);
-}
+export { sgWatchGetList };

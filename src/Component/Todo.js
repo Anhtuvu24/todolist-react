@@ -27,7 +27,7 @@ function Todo(props) {
         </div>
       </div>
       <button onClick={handleRemoveTodo}>delelte</button>
-      <button onClick={() => editMode(name, id)}>Edit</button>
+      <button onClick={() => editMode(name, id, index)}>Edit</button>
     </div>
   );
 }

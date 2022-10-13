@@ -4,6 +4,7 @@ import "../CSS/Header.css";
 function Header(props) {
   const [valueInput, setValueInput] = useState("");
   const [editID, setEditID] = useState("");
+  const [editIndex, setEditIndex] = useState("");
   const refInput = useRef(null);
   const { ediTodoPut, setKeySearch, refFocus, postRequest } = props;
 
@@ -12,7 +13,7 @@ function Header(props) {
       postRequest(valueInput);
       setValueInput("");
     } else if (valueInput !== "" && editID) {
-      ediTodoPut(valueInput, editID);
+      ediTodoPut(valueInput, editID, editIndex);
       setValueInput("");
       // setStatusInput('Add');
       setEditID(null);
@@ -24,17 +25,18 @@ function Header(props) {
       postRequest(valueInput);
       setValueInput("");
     } else if (editID && valueInput !== "" && e.key === "Enter") {
-      ediTodoPut(valueInput, editID);
+      ediTodoPut(valueInput, editID, editIndex);
       setValueInput("");
       // setStatusInput('Add');
       setEditID(null);
     }
   };
 
-  const onFocusInput = (name, id) => {
+  const onFocusInput = (name, id, index) => {
     refInput.current.focus();
     setValueInput(name);
     setEditID(id);
+    setEditIndex(index);
   };
 
   const handleSearch = () => {

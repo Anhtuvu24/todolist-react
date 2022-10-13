@@ -53,8 +53,9 @@ function TodoListItem(props) {
 }
 
 const mapStateToProps = (state) => {
+  const todoListRD = state.list.list;
   return {
-    todoListRD: state.list,
+    todoListRD,
   };
 };
 // const TodoListItemHOC = paginationSub(TodoListItem);

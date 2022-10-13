@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import Immutable from "immutable";
 import { List, merge } from "immutable";
 const initialState = {
   list: List([]),
@@ -25,24 +24,29 @@ const listTodo = createSlice({
     },
     getListRD: (state, action) => {
       const new_List = List(action.payload);
-      debugger;
       return {
         ...state,
         list: new_List,
       };
     },
     activeTodo: (state, action) => {
-      debugger;
-      // const flag = state.list.getIn([action.payload, isCompleted]);
+      const flag = state.list.getIn([action.payload, "isCompleted"]);
       // state.getin([action.payload, 'isCompleted'], ....)
-      const new_List = state.list.setIn([action.payload, "isCompleted"], true);
+      const new_List = state.list.setIn([action.payload, "isCompleted"], !flag);
+      return {
+        ...state,
+        list: new_List,
+      };
     },
     editTodo: (state, action) => {
-      const new_List = state.list.map((todo) => {
-        if (todo.id === action.payload.id) {
-          todo.name = action.payload.name;
-        }
-      });
+      debugger;
+      const new_List = state.list.setIn(
+        [action.payload.index, "name"],
+        action.payload.name
+      );
+      debugger;
+      console.log(new_List);
+      debugger;
       return {
         ...state,
         list: new_List,
@@ -62,7 +66,6 @@ const listTodo = createSlice({
 });
 
 const { reducer, actions } = listTodo;
-debugger;
 export const {
   addTodoRD,
   removeTodoRD,
