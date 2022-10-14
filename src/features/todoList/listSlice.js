@@ -21,11 +21,8 @@ const listTodo = createSlice({
       };
     },
     removeTodoRD: (state, action) => {
-      console(action.payload.payload);
-      debugger;
-      const new_List = state.list.delete(action.payload.payload.index);
-      debugger;
-      // return state.list.delete(action.payload);
+      console.log(action.payload);
+      const new_List = state.list.delete(action.payload);
       return {
         ...state,
         list: new_List,

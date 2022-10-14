@@ -7,6 +7,7 @@ import {
   select,
   delay,
   takeLatest,
+  apply,
   actionChannel,
 } from "redux-saga/effects";
 import { instance } from "../../Component/axiosURL";
@@ -32,8 +33,8 @@ function* sgWatchGetList() {
 //saga add todo
 
 function* sgAddTodo(payload) {
-  yield instance.post("todo", payload.payload);
   yield put(addTodoRD(payload));
+  yield instance.post("todo", payload.payload);
 }
 
 function* sgWatchAddTodo() {
@@ -45,14 +46,9 @@ function* sgWatchAddTodo() {
 //saga remove Todo
 
 function* sgRemoveTodo(payload) {
-  console.log(payload);
-  debugger;
   const { id, index } = payload.payload;
-  debugger;
-  yield instance.delete(`todo/${id}`);
-  console.log(removeTodoRD());
-  debugger;
   yield put(removeTodoRD(index));
+  yield instance.delete(`todo/${id}`);
 }
 function* sgWatchRemoveTodo() {
   yield takeEvery("REMOVE_TODO_SG", sgRemoveTodo);
