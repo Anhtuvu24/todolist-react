@@ -1,0 +1,9 @@
+
+export const TYPE = {
+    ADD_TODO: 'ADD-TODO', 
+    REMOVE_TODO: 'REMOVE-TODO',
+    GET_LIST: 'GET-LIST',
+    ACTIVE_TODO: 'ACTIVE-TODO',
+    EDIT_TODO: 'EDIT-TODO',
+    CHECKALL: 'CHECKALL'
+}

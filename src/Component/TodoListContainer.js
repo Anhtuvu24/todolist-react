@@ -7,7 +7,7 @@ import {
 } from "../features/todoList/listSlice";
 import { connect } from "react-redux";
 import TodoList from "./TodoList";
-import { getList, addTodoSG } from "../sagaContainer/type";
+import { getList, addTodoSG, removeTodoSG } from "../sagaContainer/type";
 
 const mapStateToProps = (state, ownProps) => {
   const todoListRD = state.list.list;
@@ -19,7 +19,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => ({
   getList: () => dispatch(getList()),
   addTodoSG: (todo) => dispatch(addTodoSG(todo)),
-  removeTodoRD: (index) => dispatch(removeTodoRD(index)),
+  removeTodoSG: ({ index, id }) => dispatch(removeTodoSG({ index, id })),
   activeTodo: (index) => dispatch(activeTodo(index)),
   editTodo: ({ name, id, index }) => dispatch(editTodo({ name, id, index })),
   checkALL: (check) => dispatch(checkALL(check)),

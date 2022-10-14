@@ -17,8 +17,10 @@ function TodoList(props) {
     activeTodo,
     editTodo,
     checkALL,
+    //-----
     getList,
     addTodoSG,
+    removeTodoSG,
   } = props;
   const [statusList, setStatusList] = useState("All");
   const [keySearch, _setKeySearch] = useState("");
@@ -28,7 +30,7 @@ function TodoList(props) {
   // const dispatch = useDispatch();
 
   ///Post request
-  const postRequest = async (name) => {
+  const postRequest = (name) => {
     const id = nanoid();
     const newTodo = {
       id,
@@ -51,9 +53,8 @@ function TodoList(props) {
   //     setList([...list, { name: name, isCompleted: false, id }]);
   // };
 
-  const removeTodoDelete = async (index, id) => {
-    removeTodoRD(index);
-    await instance.delete(`todo/${id}`);
+  const removeTodoDelete = (index, id) => {
+    removeTodoSG({ index, id });
   };
 
   // const removeTodo = (index) => {

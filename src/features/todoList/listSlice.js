@@ -8,14 +8,23 @@ const listTodo = createSlice({
   initialState,
   reducers: {
     addTodoRD: (state, action) => {
-      const new_List = state.list.push(action.payload);
+      const { id, name, isCompleted } = action.payload.payload;
+      const newTodo = {
+        id,
+        name,
+        isCompleted,
+      };
+      const new_List = state.list.push(newTodo);
       return {
         ...state,
         list: new_List,
       };
     },
     removeTodoRD: (state, action) => {
-      const new_List = state.list.delete(action.payload);
+      console(action.payload.payload);
+      debugger;
+      const new_List = state.list.delete(action.payload.payload.index);
+      debugger;
       // return state.list.delete(action.payload);
       return {
         ...state,

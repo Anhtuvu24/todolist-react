@@ -25,3 +25,19 @@ export const activeTodo = (index) => {
         payload: index,
     }
 }
+
+export const editTodo = ({name, id}) => {
+    return {
+        type: 'EDIT-TODO',
+        name: name,
+        id: id,
+    }
+}
+
+export const checkALL = (check) => {
+    return {
+        type: 'CHECKALL',
+        payload: check,
+    }
+}
+
