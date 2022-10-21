@@ -21,7 +21,6 @@ const listTodo = createSlice({
       };
     },
     removeTodoRD: (state, action) => {
-      console.log(action.payload);
       const new_List = state.list.delete(action.payload);
       return {
         ...state,
@@ -36,9 +35,11 @@ const listTodo = createSlice({
       };
     },
     activeTodo: (state, action) => {
-      const flag = state.list.getIn([action.payload, "isCompleted"]);
-      // state.getin([action.payload, 'isCompleted'], ....)
-      const new_List = state.list.setIn([action.payload, "isCompleted"], !flag);
+      const new_List = state.list.setIn(
+        [action.payload.index, "isCompleted"],
+        action.payload.statusTodo
+      );
+      debugger;
       return {
         ...state,
         list: new_List,
@@ -59,13 +60,14 @@ const listTodo = createSlice({
       };
     },
     checkALL: (state, action) => {
+      console.log(state.list);
       const new_List = [...state.list];
       new_List.map((todo) => {
         todo.isCompleted = action.payload;
       });
       return {
         ...state,
-        list: new_List,
+        list: List(new_List),
       };
     },
   },

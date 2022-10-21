@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import ThemeProvider from "./Component/ThemeProvider";
 import { Provider } from "react-redux";
 import store from "./app/store";
+
 import "./CSS/index.css";
 
 ReactDOM.render(

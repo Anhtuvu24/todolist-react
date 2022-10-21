@@ -6,21 +6,18 @@ import Footer from "./Footer";
 import { Theme } from "./theme";
 import ThemeButton from "./ThemeButton";
 import TodoListItem from "./TodoListItem";
-import { instance } from "./axiosURL";
 import "../CSS/TodoList.css";
-
 function TodoList(props) {
   const {
     todoListRD,
-    addTodoRD,
-    removeTodoRD,
-    activeTodo,
-    editTodo,
-    checkALL,
-    //-----
     getList,
     addTodoSG,
     removeTodoSG,
+    activeTodoSG,
+    checkAllSG,
+    editTodoSG,
+    getListActive,
+    getListComplete,
   } = props;
   const [statusList, setStatusList] = useState("All");
   const [keySearch, _setKeySearch] = useState("");
@@ -42,47 +39,30 @@ function TodoList(props) {
 
   //Get request
   useEffect(() => {
-    async function fecthApi() {
+    function fecthApi() {
       getList();
     }
     fecthApi();
   }, []);
 
-  // const addTodo = (name, id) => {
-  //     // this.setState({list: [...this.state.list, {name: name, isCompleted: false, id: nanoid()}]});
-  //     setList([...list, { name: name, isCompleted: false, id }]);
-  // };
-
   const removeTodoDelete = (index, id) => {
     removeTodoSG({ index, id });
   };
 
-  // const removeTodo = (index) => {
-  //     let new_List = list;
-  //     new_List.splice(index, 1);
-  //     setList([...new_List]);
-  // };
-
-  const handleCheckBoxPut = async (id, index) => {
+  const handleCheckBoxPut = (id, index) => {
     const new_List = [...todoListRD];
     let statusTodo;
     statusTodo = !new_List[index].isCompleted;
-    activeTodo(index);
-    await instance.put(`todo/${id}`, { isCompleted: statusTodo });
+    activeTodoSG({ id, index, statusTodo });
   };
 
   const isCheckAll = () => {
     return !todoListRD.some((todo) => !todo.isCompleted);
   };
 
-  const checkAllPut = async () => {
+  const checkAllPut = () => {
     const flag = !isCheckAll();
-    checkALL(flag);
-    for (const item of todoListRD) {
-      if (item.isCompleted !== flag) {
-        await instance.put(`todo/${item.id}`, { isCompleted: flag });
-      }
-    }
+    checkAllSG({ flag, todoListRD });
   };
 
   const displayList = (statusList) => {
@@ -93,15 +73,16 @@ function TodoList(props) {
     headerRef.current.onFocusInput(name, id, index);
   };
 
-  const ediTodoPut = async (name, id, index) => {
-    editTodo({ name, id, index });
-    await instance.put(`todo/${id}`, { name });
+  const ediTodoPut = (name, id, index) => {
+    editTodoSG({ name, id, index });
   };
 
   const setKeySearch = (keySearch) => {
     _setKeySearch(keySearch);
   };
-
+  console.log(todoListRD);
+  console.log(getListActive);
+  console.log(getListComplete);
   return (
     <>
       {/* fix------------------------------------- */}

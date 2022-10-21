@@ -3,8 +3,17 @@ import {
   sgWatchGetList,
   sgWatchAddTodo,
   sgWatchRemoveTodo,
+  sgWatchActiveTodo,
+  sgWatchCheckAll,
+  sgWatchEditTodo,
 } from "../features/auth/authSaga";
 export default function* rootSaga() {
-  console.log("rootSaga");
-  yield all([sgWatchGetList(), sgWatchAddTodo(), sgWatchRemoveTodo()]);
+  yield all([
+    sgWatchGetList(),
+    sgWatchAddTodo(),
+    sgWatchRemoveTodo(),
+    sgWatchActiveTodo(),
+    sgWatchCheckAll(),
+    sgWatchEditTodo(),
+  ]);
 }
