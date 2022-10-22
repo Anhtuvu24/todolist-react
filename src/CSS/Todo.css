@@ -1,0 +1,51 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  
+  .todo-container {
+    align-items: center;
+    margin: 20px;
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    background: none !important;
+  }
+  
+  .todoDisplay {
+    width: 350px;
+    text-align: left;
+    word-wrap: break-word;
+  }
+  
+  .scrollBot {
+    width: 600px;
+  }
+  
+  .completed {
+    text-decoration: line-through;
+    opacity: 0.5;
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .todo-container button {
+    background: none !important;
+    width: 80px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px #ccc;
+  }
+  
+  .todo-container button:first-child {
+    margin-left: 50px;
+    margin-right: 100px;
+  }
+  
+  .todo-container button:hover {
+    background-color: rgba(175, 47, 47, 0.15) !important;
+    border: none;
+    color: red;
+    cursor: pointer;
+  }

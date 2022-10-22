@@ -1,0 +1,39 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+h1 {
+    font-size: 56px;
+    margin: 20px;
+}
+
+.Container-header {
+    background: none !important;
+}
+
+.searchKeyWord input, .Container-header input {
+    background: none !important;
+    padding: 8px;
+    width: 300px;
+    margin-right: 10px;
+    border: 0.5px solid #ccc;
+    border-radius: 5px;
+}
+
+.searchKeyWord button, .Container-header button {
+    border: none;
+    background: none !important;
+    border-radius: 5px;
+    width: 100px;
+    height: 35px;
+    box-shadow: 0px 0px 10px 0px #ccc;
+    margin-right: 10px;
+}
+
+.searchKeyWord button:hover, .Container-header button:hover {
+    background-color: rgba(175, 47, 47, 0.15) !important;
+    color: red;
+    cursor: pointer;
+}
