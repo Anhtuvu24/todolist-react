@@ -6,7 +6,7 @@ export const themes = {
   },
   dark: {
     color: "black",
-    backgroundColor: "palevioletred",
+    backgroundColor: "aqua",
   },
 };
 export const Theme = React.createContext({
