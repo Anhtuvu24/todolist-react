@@ -13,6 +13,8 @@ function TodoListItem(props) {
     keySearch,
     editMode,
     todoListRD,
+    getListActive,
+    getListComplete,
   } = props;
   const [limitTodo, isLoading, onScrollBot] = usePaginationSub(todoListRD);
   const setScrollRef = (e) => {
@@ -21,6 +23,10 @@ function TodoListItem(props) {
   const onScrollBottom = () => {
     onScrollBot(scrollRef);
   };
+
+  console.log(todoListRD);
+  console.log(getListActive);
+  console.log(getListComplete);
   return (
     <div className="scrollBot" onScroll={onScrollBottom} ref={setScrollRef}>
       {todoListRD.map((todo, index) => {

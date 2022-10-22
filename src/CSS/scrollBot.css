@@ -1,12 +1,12 @@
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 .scrollBot {
-    margin-top: 20px;
-    height: 200px; 
-    overflow-y: scroll;
-    transition: all 0.10s ease 0.2s;
+  margin-top: 20px;
+  height: 200px;
+  overflow-y: scroll;
+  transition: all 0.1s ease 0.2s;
 }

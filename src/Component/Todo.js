@@ -1,4 +1,6 @@
-import React from "react";
+import Reac, { useContext } from "react";
+import { Theme } from "./theme";
+
 import "../CSS/Todo.css";
 
 function Todo(props) {
@@ -11,11 +13,20 @@ function Todo(props) {
     editMode,
     removeTodoDelete,
   } = props;
+  const theme = useContext(Theme);
+
   const handleRemoveTodo = () => {
     removeTodoDelete(index, id);
   };
+
   return (
-    <div className="todo-container">
+    <div
+      className="todo-container"
+      style={{
+        backgroundColor: theme.theme.backgroundColor,
+        color: theme.theme.color,
+      }}
+    >
       <input
         type="checkbox"
         onChange={() => handleCheckBoxPut(id, index)}

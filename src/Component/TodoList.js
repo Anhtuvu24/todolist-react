@@ -80,9 +80,6 @@ function TodoList(props) {
   const setKeySearch = (keySearch) => {
     _setKeySearch(keySearch);
   };
-  console.log(todoListRD);
-  console.log(getListActive);
-  console.log(getListComplete);
   return (
     <>
       {/* fix------------------------------------- */}
@@ -106,6 +103,8 @@ function TodoList(props) {
           removeTodoDelete={removeTodoDelete}
           handleCheckBoxPut={handleCheckBoxPut}
           editMode={editMode}
+          getListActive={getListActive}
+          getListComplete={getListComplete}
         />
         <div className="Container-footer">
           <b>
