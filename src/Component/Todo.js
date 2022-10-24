@@ -1,5 +1,5 @@
-import Reac, { useContext } from "react";
-import { Checkbox, Popconfirm, Button } from "antd";
+import React, { useContext } from "react";
+import { Checkbox, Popconfirm } from "antd";
 import { Theme } from "./theme";
 
 import "../CSS/Todo.css";

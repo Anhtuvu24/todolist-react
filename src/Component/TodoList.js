@@ -63,7 +63,6 @@ function TodoList(props) {
 
   const checkAllPut = () => {
     const flag = !isCheckAll();
-    console.log(todoListRD);
     checkAllSG({ flag, todoListRD });
   };
 

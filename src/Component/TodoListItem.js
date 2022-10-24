@@ -18,7 +18,6 @@ function TodoListItem(props) {
     getListActive,
     getListComplete,
   } = props;
-  console.log(todoListRD);
   const [limitTodo, isLoading, onScrollBot] = usePaginationSub(todoListRD);
   const setScrollRef = (e) => {
     scrollRef = e;
