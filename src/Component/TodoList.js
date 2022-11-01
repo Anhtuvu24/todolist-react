@@ -6,6 +6,7 @@ import Footer from "./Footer";
 import { Theme } from "./theme";
 import ThemeButton from "./ThemeButton";
 import TodoListItem from "./TodoListItem";
+import Pin from "./navPin";
 import "../CSS/TodoList.css";
 function TodoList(props) {
   const {
@@ -90,6 +91,7 @@ function TodoList(props) {
         }}
         className="list-container"
       >
+        <Pin />
         <Header
           setKeySearch={setKeySearch}
           displayList={displayList}
@@ -97,7 +99,7 @@ function TodoList(props) {
           ediTodoPut={ediTodoPut}
           postRequest={postRequest}
         />
-        <TodoListItem
+        {/* <TodoListItem
           statusList={statusList}
           keySearch={keySearch}
           removeTodoDelete={removeTodoDelete}
@@ -105,7 +107,7 @@ function TodoList(props) {
           editMode={editMode}
           getListActive={getListActive}
           getListComplete={getListComplete}
-        />
+        /> */}
         <div className="Container-footer">
           <b>
             <i>{todoListRD.size}</i> items

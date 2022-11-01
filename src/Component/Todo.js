@@ -1,4 +1,4 @@
-import Reac, { useContext } from "react";
+import React, { useContext } from "react";
 import { Theme } from "./theme";
 
 import "../CSS/Todo.css";
@@ -7,6 +7,7 @@ function Todo(props) {
   const {
     isCompleted,
     id,
+    indexPin,
     index,
     name,
     handleCheckBoxPut,
@@ -18,7 +19,7 @@ function Todo(props) {
   const handleRemoveTodo = () => {
     removeTodoDelete(index, id);
   };
-
+  console.log("TD: ", indexPin);
   return (
     <div
       className="todo-container"
@@ -34,7 +35,7 @@ function Todo(props) {
       />
       <div className={isCompleted ? "completed" : ""}>
         <div className="todoDisplay">
-          {index}. {name}
+          {indexPin}. {name}
         </div>
       </div>
       <button onClick={handleRemoveTodo}>delelte</button>

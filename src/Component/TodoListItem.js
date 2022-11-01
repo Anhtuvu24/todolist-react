@@ -15,6 +15,7 @@ function TodoListItem(props) {
     todoListRD,
     getListActive,
     getListComplete,
+    indexPin,
   } = props;
   const [limitTodo, isLoading, onScrollBot] = usePaginationSub(todoListRD);
   const setScrollRef = (e) => {
@@ -23,25 +24,23 @@ function TodoListItem(props) {
   const onScrollBottom = () => {
     onScrollBot(scrollRef);
   };
-
-  console.log(todoListRD);
-  console.log(getListActive);
-  console.log(getListComplete);
+  console.log("TOL: ", indexPin);
   return (
     <div className="scrollBot" onScroll={onScrollBottom} ref={setScrollRef}>
       {todoListRD.map((todo, index) => {
-        if (
-          ((todo.isCompleted && statusList === "Complete") ||
-            (!todo.isCompleted && statusList === "Active") ||
-            statusList === "All") &&
-          (keySearch ? todo.name.includes(keySearch) : true) &&
-          index < limitTodo
-        ) {
+        // if (
+        //   ((todo.isCompleted && statusList === "Complete") ||
+        //     (!todo.isCompleted && statusList === "Active") ||
+        //     statusList === "All") &&
+        //   (keySearch ? todo.name.includes(keySearch) : true) &&
+        //   index < limitTodo
+        // ) {
+        if (index === indexPin) {
           return (
             <Todo
               name={todo.name}
               isCompleted={todo.isCompleted}
-              index={index}
+              indexPin={indexPin}
               removeTodoDelete={removeTodoDelete}
               handleCheckBoxPut={handleCheckBoxPut}
               id={todo.id}
@@ -50,7 +49,8 @@ function TodoListItem(props) {
             />
           );
         }
-        return null;
+        // }
+        // return null;
       })}
 
       {isLoading && <div>Loading...</div>}
